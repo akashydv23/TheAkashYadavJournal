@@ -1,2 +1,2 @@
-# TheAkashYadavJournal
-Personal Newspaper Styled Portfolio
+# akashydv23.github.io
+Akash Yadav's Journal — Volume I, 2026

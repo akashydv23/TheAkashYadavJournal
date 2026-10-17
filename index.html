@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akash Yadav's Journal — Volume I</title>
+  <meta name="description" content="Akash Yadav — Aspiring PM. I find the problem, make the call, and ship it. Problems · Decisions · People · Impact." />
+  <meta property="og:title" content="Akash Yadav's Journal — Volume I" />
+  <meta property="og:description" content="Aspiring PM · Shipped Products · Leadership · Data Analytics · Strategy" />
+
+  <!-- Typography & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400;1,700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { 
+            parchment: '#f4f1ea', 
+            ink: '#1a1a1a',
+            gold: '#c8a84b',
+            accent: '#8B6914'
+          },
+          fontFamily: {
+            masthead: ['"UnifrakturMaguntia"','serif'],
+            headline: ['"Playfair Display"','Georgia','serif'],
+            body: ['"Merriweather"','Georgia','serif'],
+            fell: ['"IM Fell English"','Georgia','serif'],
+            mono: ['"JetBrains Mono"','monospace'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #f4f1ea; color: #1a1a1a;
+      font-family: 'Merriweather', Georgia, serif;
+      margin: 0; padding: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.011) 27px, rgba(0,0,0,0.011) 28px);
+      overflow-x: hidden;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9990; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 200px 200px;
+    }
+
+    /* ===================================================
+       1. MOTION PRIMITIVES & WATERMELON UI CUSTOM CURSOR
+    =================================================== */
+    @media (pointer: fine) {
+      body { cursor: default; }
+      a, button, [role="button"], input, .story-card, .toc-card, .skill-tag, .chip-btn {
+        cursor: pointer;
+      }
+      #cursor-dot {
+        position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+        background: #1a1a1a; border-radius: 50%; pointer-events: none; z-index: 99999;
+        transform: translate(-50%, -50%); transition: transform 0.08s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+      }
+      #cursor-ring {
+        position: fixed; top: 0; left: 0; width: 34px; height: 34px;
+        border: 1.5px solid rgba(26,26,26,0.65); border-radius: 50%;
+        pointer-events: none; z-index: 99998; transform: translate(-50%, -50%);
+        transition: width 0.24s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.24s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, background 0.2s ease, transform 0.05s ease;
+      }
+      #cursor-label {
+        position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999;
+        font-family: 'Playfair Display', serif; font-size: 0.52rem; font-weight: 800;
+        letter-spacing: 0.12em; text-transform: uppercase; background: #1a1a1a; color: #f4f1ea;
+        padding: 2px 7px; border: 1px solid #c8a84b; transform: translate(14px, 14px);
+        opacity: 0; transition: opacity 0.18s ease, transform 0.18s ease; white-space: nowrap;
+      }
+      body.cursor-hover #cursor-ring {
+        width: 54px; height: 54px; border-color: #1a1a1a; background: rgba(200,168,75,0.12);
+      }
+      body.cursor-hover #cursor-dot {
+        transform: translate(-50%, -50%) scale(1.6); background: #c8a84b;
+      }
+      body.cursor-has-label #cursor-label {
+        opacity: 1; transform: translate(16px, 16px);
+      }
+    }
+    @media (pointer: coarse) {
+      #cursor-dot, #cursor-ring, #cursor-label { display: none !important; }
+    }
+
+    /* ===================================================
+       2. TEXT-EFFECT (MOTION PRIMITIVES STYLES)
+    =================================================== */
+    .text-effect-container { display: inline; }
+    .text-effect-word {
+      display: inline-block; white-space: pre;
+      opacity: 0; filter: blur(8px); transform: translateY(14px);
+      transition: opacity 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .text-effect-word.revealed {
+      opacity: 1; filter: blur(0px); transform: translateY(0);
+    }
+
+    /* Text Scramble Font effect */
+    .scramble-active {
+      font-family: 'JetBrains Mono', monospace !important;
+      color: #8B6914 !important;
+    }
+
+    /* ===================================================
+       3. WATERMELON UI SPOTLIGHT & 3D TILT CARDS
+    =================================================== */
+    .spotlight-card {
+      position: relative; overflow: hidden;
+      transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, border-color 0.2s ease;
+      background: rgba(0,0,0,0.006);
+    }
+    .spotlight-card::before {
+      content: ''; position: absolute; inset: 0; opacity: 0; pointer-events: none;
+      background: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(200,168,75,0.15), transparent 60%);
+      transition: opacity 0.3s ease; z-index: 1;
+    }
+    .spotlight-card:hover::before { opacity: 1; }
+    .spotlight-card:hover {
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.12), 4px 4px 0 rgba(0,0,0,0.15);
+      border-color: #1a1a1a;
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: #1a1a1a; z-index: 10001; transition: width 0.08s linear; }
+
+    /* ===== TICKER ===== */
+    .ticker-outer { background: #1a1a1a; color: #f4f1ea; overflow: hidden; height: 32px; display: flex; align-items: center; position: relative; z-index: 50; }
+    .ticker-label { font-family: 'Playfair Display', serif; font-size: 0.6rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; background: #c8a84b; color: #1a1a1a; padding: 0 14px; height: 100%; display: flex; align-items: center; flex-shrink: 0; border-right: 2px solid rgba(255,255,255,0.2); white-space: nowrap; }
+    .ticker-track-wrapper { flex: 1; overflow: hidden; height: 100%; display: flex; align-items: center; }
+    .ticker-track { display: flex; align-items: center; animation: ticker-scroll 100s linear infinite; white-space: nowrap; }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item { font-family: 'Merriweather', serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; padding: 0 3rem; }
+    .ticker-item::before { content: '\25C6  '; opacity: 0.6; color: #c8a84b; }
+    @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ===== CHAPTER NAV ===== */
+    #chapter-nav { position: sticky; top: 0; z-index: 999; background: #f4f1ea; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; backdrop-filter: blur(8px); }
+    .chapter-nav-inner { display: flex; justify-content: center; flex-wrap: wrap; max-width: 1320px; margin: 0 auto; position: relative; }
+    .chapter-nav-btn { display: flex; align-items: center; gap: 5px; padding: 7px 11px; border: none; border-right: 1px solid rgba(0,0,0,0.15); background: transparent; cursor: pointer; color: #1a1a1a; transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); white-space: nowrap; position: relative; }
+    .chapter-nav-btn:first-child { border-left: 1px solid rgba(0,0,0,0.15); }
+    .chapter-num-badge { font-family: 'Merriweather', serif; font-size: 0.48rem; font-weight: 700; letter-spacing: 0.06em; opacity: 0.45; }
+    .chapter-nav-name { font-family: 'Playfair Display', serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .chapter-nav-btn:hover { background: rgba(0,0,0,0.05); }
+    .chapter-nav-btn.active-nav { background: #1a1a1a; color: #f4f1ea; }
+    .chapter-nav-btn.active-nav .chapter-num-badge { opacity: 0.85; color: #c8a84b; }
+
+    /* ===== MULTI-PAGE SYSTEM ===== */
+    .pages-container { position: relative; }
+    .page-section { display: none; opacity: 0; transform: translateY(14px); transition: opacity 0.35s ease, transform 0.35s ease; padding: 2.2rem 0 5.5rem; min-height: calc(100vh - 110px); }
+    .page-section.active { display: block; }
+    .page-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== VERTICAL SIDEBAR (DESKTOP) ===== */
+    @media (min-width: 1200px) {
+      #chapter-nav {
+        position: fixed; top: 0; left: 0; bottom: 0; width: 175px;
+        border-top: none; border-bottom: none; border-right: 2px solid #1a1a1a;
+        display: flex; flex-direction: column; justify-content: center;
+        background: #f4f1ea; z-index: 1000; padding: 1.2rem 0;
+      }
+      .chapter-nav-inner { flex-direction: column; width: 100%; }
+      .chapter-nav-btn {
+        width: 100%; border-right: none; border-left: none; border-bottom: 1px solid rgba(0,0,0,0.1);
+        padding: 9px 12px; justify-content: flex-start;
+      }
+      .chapter-nav-btn:first-child { border-top: 1px solid rgba(0,0,0,0.1); border-left: none; }
+      body { padding-left: 175px; }
+      .pages-container { max-width: 1140px; margin: 0 auto; }
+    }
+
+    /* ===== MASTHEAD ===== */
+    .journal-name-sup { font-family: 'Playfair Display', serif; font-size: clamp(0.9rem, 2.2vw, 1.35rem); font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; opacity: 0.85; }
+    .journal-title { font-family: 'UnifrakturMaguntia', serif; font-size: clamp(3.2rem, 9.5vw, 6.8rem); line-height: 0.95; color: #1a1a1a; text-shadow: 2px 2px 0 rgba(0,0,0,0.06); }
+    .journal-subhead { font-family: 'Playfair Display', serif; font-size: clamp(0.9rem, 2.2vw, 1.4rem); font-weight: 700; font-style: italic; color: #1a1a1a; }
+    .journal-tagline { font-family: 'IM Fell English', serif; font-size: clamp(0.85rem, 1.8vw, 1.15rem); font-style: italic; opacity: 0.88; }
+    .masthead-img { width: 100%; max-height: 110px; object-fit: cover; filter: sepia(0.3) contrast(1.1); display: block; }
+
+    /* ===== CTA BUTTONS WITH WATERMELON SHIMMER ===== */
+    .cta-btn-primary {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      font-family: 'Playfair Display', serif; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      background: #1a1a1a; color: #f4f1ea; padding: 10px 18px; border: 2px solid #1a1a1a;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 3px 3px 0 rgba(0,0,0,0.22);
+    }
+    .cta-btn-primary::after {
+      content: ''; position: absolute; top: -50%; left: -60%; width: 30%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: rotate(25deg); transition: none; pointer-events: none;
+    }
+    .cta-btn-primary:hover::after {
+      left: 140%; transition: left 0.75s ease;
+    }
+    .cta-btn-primary:hover { background: #f4f1ea; color: #1a1a1a; transform: translate(-2px, -2px); box-shadow: 5px 5px 0 rgba(0,0,0,0.35); }
+
+    .cta-btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      font-family: 'Playfair Display', serif; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      background: transparent; color: #1a1a1a; padding: 10px 18px; border: 2px solid #1a1a1a;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+    }
+    .cta-btn-secondary:hover { background: #1a1a1a; color: #f4f1ea; transform: translate(-2px, -2px); box-shadow: 4px 4px 0 rgba(0,0,0,0.25); }
+
+    /* ===== HERO MOCKUP STRIP ===== */
+    .hero-mockup-strip {
+      border: 2px solid #1a1a1a; background: #fff; box-shadow: 6px 6px 0 rgba(0,0,0,0.1);
+      margin-bottom: 2rem; overflow: hidden;
+    }
+    .mockup-window-header {
+      background: #1a1a1a; color: #f4f1ea; padding: 7px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Merriweather', serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .mockup-dot-group { display: flex; gap: 5px; }
+    .mockup-dot { width: 8px; height: 8px; border-radius: 50%; background: #4a4a4a; display: inline-block; }
+
+    /* ===== TOC CARDS ===== */
+    .toc-card { border: 1px solid #1a1a1a; padding: 0.95rem 1rem; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; background: rgba(0,0,0,0.007); }
+    .toc-card:hover { background: rgba(0,0,0,0.035); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+    .toc-card-num { font-family: 'Merriweather', serif; font-size: 0.51rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.38; margin-bottom: 0.3rem; }
+    .toc-card-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 0.88rem; line-height: 1.22; }
+    .toc-card-desc { font-family: 'Merriweather', serif; font-size: 0.57rem; line-height: 1.62; color: #3a3a3a; margin-top: 0.32rem; font-style: italic; }
+    .toc-card-action { font-family: 'Merriweather', serif; font-size: 0.51rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.5rem; opacity: 0.45; }
+
+    /* ===== PAGE DOTS ===== */
+    .page-dots { position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 4998; background: rgba(244,241,234,0.92); padding: 6px 12px; border: 1px solid rgba(0,0,0,0.18); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .page-dot { width: 8px; height: 8px; border: 1.5px solid #1a1a1a; background: transparent; cursor: pointer; transition: background 0.18s ease, transform 0.18s ease; }
+    .page-dot:hover { transform: scale(1.3); }
+    .page-dot.active-dot { background: #1a1a1a; }
+
+    /* ===== RULES ===== */
+    .double-rule { border-top: 3px solid #000; border-bottom: 1px solid #000; padding-top: 3px; }
+    .triple-rule { border-top: 5px solid #000; border-bottom: 1px solid #000; padding-top: 3px; }
+
+    /* ===== TYPOGRAPHY ===== */
+    .drop-cap::first-letter { float: left; font-family: 'Playfair Display', serif; font-size: 5.2em; line-height: 0.75; margin: 0.05em 0.08em 0 0; font-weight: 900; }
+    .article-kicker { font-family: 'Merriweather', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1a1a1a; display: inline-block; padding-bottom: 2px; }
+    .article-headline { font-family: 'Playfair Display', serif; font-weight: 900; line-height: 1.1; }
+    .article-deck { font-family: 'Merriweather', serif; font-style: italic; font-weight: 300; line-height: 1.55; color: #3a3a3a; }
+    .article-byline { font-family: 'Merriweather', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #3a3a3a; }
+    .article-body { font-family: 'Merriweather', serif; font-size: 0.82rem; line-height: 1.9; text-align: justify; }
+    .masthead-subtitle { font-family: 'Playfair Display', serif; font-size: clamp(0.54rem, 1.2vw, 0.76rem); letter-spacing: 0.18em; text-transform: uppercase; }
+
+    /* ===== SECTION LABELS ===== */
+    .section-label { font-family: 'Playfair Display', serif; font-size: clamp(1rem, 3.5vw, 1.7rem); font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; background: #1a1a1a; color: #f4f1ea; padding: 0.35rem 1rem; display: block; }
+    .section-label-outline { font-family: 'Playfair Display', serif; font-size: clamp(0.65rem, 1.7vw, 0.92rem); font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-align: center; border: 2px solid #1a1a1a; padding: 0.2rem 1.2rem; display: inline-block; }
+    .chapter-label { font-family: 'Merriweather', serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.42; display: block; margin-bottom: 0.2rem; }
+
+    /* ===== PULL QUOTE ===== */
+    .pull-quote { font-family: 'Playfair Display', serif; font-size: clamp(0.9rem, 2vw, 1.2rem); font-style: italic; font-weight: 700; line-height: 1.45; text-align: center; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; padding: 0.8rem 0.6rem; margin: 1rem 0; }
+
+    /* ===== ORNAMENT ===== */
+    .ornament-divider { text-align: center; font-size: 1rem; letter-spacing: 0.4em; padding: 0.3rem 0; }
+
+    /* ===== STAT BADGE (ANIMATED SLIDING NUMBER READY) ===== */
+    .stat-badge {
+      border: 2px solid #1a1a1a; display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 0.45rem 0.65rem; min-width: 72px; text-align: center; transition: all 0.2s ease; background: #fff;
+    }
+    .stat-badge:hover { background: #1a1a1a; color: #f4f1ea; transform: translateY(-2px); box-shadow: 3px 3px 0 rgba(0,0,0,0.2); }
+    .stat-badge .stat-num { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.45rem; line-height: 1; }
+    .stat-badge .stat-label { font-family: 'Merriweather', serif; font-size: 0.52rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.3; margin-top: 0.2rem; }
+
+    /* ===== CLASSIFIEDS / INFO BOXES ===== */
+    .classifieds-box { border: 2px solid #1a1a1a; padding: 0.8rem; background: rgba(0,0,0,0.018); }
+    .classifieds-header { font-family: 'Playfair Display', serif; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid #1a1a1a; padding-bottom: 0.28rem; margin-bottom: 0.5rem; }
+    .ad-box { border: 3px double #1a1a1a; padding: 1rem; text-align: center; background: rgba(0,0,0,0.012); }
+
+    /* ===== WEATHER / DOSSIER BOX ===== */
+    .weather-box { border: 2px solid #1a1a1a; background: rgba(0,0,0,0.018); }
+    .weather-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; padding: 0.38rem 0.6rem; border-bottom: 1px dashed rgba(0,0,0,0.18); }
+    .weather-row:last-child { border-bottom: none; }
+    .weather-key { font-family: 'Merriweather', serif; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; }
+    .weather-val { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.75rem; text-align: right; }
+
+    /* ===== SKILL TAGS (INTERACTIVE TOOLKIT PILLS) ===== */
+    .skill-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      border: 1.5px solid #1a1a1a; font-size: 0.59rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 9px; font-family: 'Merriweather', serif; background: #fff;
+      transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); user-select: none;
+    }
+    .skill-tag:hover {
+      background: #1a1a1a; color: #f4f1ea; transform: translateY(-2px);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
+    }
+    .skill-cat-head { font-family: 'Playfair Display', serif; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 3px; margin-bottom: 0.55rem; margin-top: 1.2rem; }
+    .skill-cat-head:first-child { margin-top: 0; }
+
+    /* Toolkit Filter Buttons */
+    .filter-btn {
+      font-family: 'Playfair Display', serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 12px; border: 1.5px solid #1a1a1a; background: transparent; transition: all 0.16s ease;
+    }
+    .filter-btn.active-filter, .filter-btn:hover { background: #1a1a1a; color: #f4f1ea; }
+
+    /* Toolkit Floating Inspector Toast */
+    #skill-inspector {
+      position: fixed; bottom: 4.5rem; right: 1.5rem; max-width: 320px;
+      background: #1a1a1a; color: #f4f1ea; border: 2px solid #c8a84b; padding: 12px 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 10002;
+      opacity: 0; transform: translateY(16px); pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    #skill-inspector.active {
+      opacity: 1; transform: translateY(0); pointer-events: all;
+    }
+
+    /* ===== STORY CARD ===== */
+    .story-card { cursor: pointer; transition: background 0.22s ease, box-shadow 0.22s ease, transform 0.2s ease; position: relative; }
+    .story-card:hover { background: rgba(0,0,0,0.02); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1), 0 6px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .story-card::after { content: 'Read Full Entry \2197'; position: absolute; bottom: 0.75rem; right: 1rem; font-family: 'Playfair Display', serif; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0; transition: opacity 0.2s ease; background: #1a1a1a; color: #f4f1ea; padding: 3px 10px; }
+    .story-card:hover::after { opacity: 1; }
+
+    /* ===== READ BUTTON ===== */
+    .read-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'Playfair Display', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; border: 2px solid #1a1a1a; padding: 6px 16px; cursor: pointer; background: transparent; color: #1a1a1a; margin-top: 1rem; transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease; user-select: none; }
+    .read-btn:hover { background: #1a1a1a; color: #f4f1ea; transform: translate(-2px,-2px); box-shadow: 3px 3px 0 rgba(0,0,0,0.28); }
+
+    /* ===== INTERACTIVE QUOTE ===== */
+    .iq-wrap { border: 2px solid #1a1a1a; background: #1a1a1a; color: #f4f1ea; padding: 2.2rem 2rem; position: relative; overflow: hidden; margin: 1.5rem 0; box-shadow: 6px 6px 0 rgba(0,0,0,0.18); }
+    .iq-wrap::before { content: '\201C'; position: absolute; top: -0.6rem; left: 0.8rem; font-family: 'Playfair Display', serif; font-size: 9rem; line-height: 1; color: rgba(255,255,255,0.05); pointer-events: none; font-weight: 900; }
+    .cover-iq { border-left: 6px solid #c8a84b; }
+    .iq-text { font-family: 'Playfair Display', serif; font-size: clamp(1rem, 2.3vw, 1.45rem); font-style: italic; font-weight: 600; line-height: 1.45; position: relative; z-index: 1; letter-spacing: 0.01em; }
+    .iq-attr { font-family: 'Merriweather', serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #c8a84b; margin-top: 1rem; position: relative; z-index: 1; }
+
+    /* ===== BROADCAST COPY TOAST ===== */
+    #copy-toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translate(-50%, 20px);
+      background: #1a1a1a; color: #f4f1ea; border: 1.5px solid #c8a84b;
+      padding: 8px 18px; font-family: 'Merriweather', serif; font-size: 0.68rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3); z-index: 10005; pointer-events: none;
+      opacity: 0; transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    #copy-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ===== SPREAD OVERLAY ===== */
+    #spread-overlay { position: fixed; inset: 0; z-index: 20000; pointer-events: none; display: flex; align-items: flex-end; justify-content: center; }
+    #spread-overlay.active { pointer-events: all; }
+    #spread-backdrop { position: absolute; inset: 0; background: rgba(10,10,10,0.68); backdrop-filter: blur(4px) brightness(0.6); -webkit-backdrop-filter: blur(4px) brightness(0.6); opacity: 0; transition: opacity 0.38s ease; cursor: pointer; }
+    #spread-overlay.active #spread-backdrop { opacity: 1; }
+    #spread-panel { position: relative; z-index: 1; width: min(96vw,1240px); height: 90vh; background: #f4f1ea; border: 2px solid #1a1a1a; border-bottom: none; border-top: 5px solid #1a1a1a; box-shadow: 0 -12px 60px rgba(0,0,0,0.45); overflow: hidden; display: flex; flex-direction: column; transform: translateY(100%) scale(0.97); opacity: 0; transition: transform 0.46s cubic-bezier(0.32,1.25,0.54,1), opacity 0.3s ease; flex-shrink: 0; }
+    #spread-overlay.active #spread-panel { transform: translateY(0) scale(1); opacity: 1; }
+    .spread-drag-handle { width: 44px; height: 5px; background: rgba(0,0,0,0.18); border-radius: 3px; margin: 10px auto 0; flex-shrink: 0; }
+    .spread-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1.5rem; border-bottom: 2px solid #1a1a1a; flex-shrink: 0; background: #f4f1ea; }
+    .spread-edition-tag { font-family: 'Playfair Display', serif; font-size: 0.57rem; font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; color: #3a3a3a; }
+    .spread-close { width: 34px; height: 34px; border: 2px solid #1a1a1a; background: transparent; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1; color: #1a1a1a; display: flex; align-items: center; justify-content: center; transition: background 0.15s ease, color 0.15s ease; flex-shrink: 0; }
+    .spread-close:hover { background: #1a1a1a; color: #f4f1ea; }
+    #spread-content { flex: 1; overflow-y: auto; padding: 0; }
+    #spread-content::-webkit-scrollbar { width: 5px; }
+    #spread-content::-webkit-scrollbar-track { background: #e8e4d9; }
+    #spread-content::-webkit-scrollbar-thumb { background: #1a1a1a; }
+    .spread-inner { padding: 2rem 2.5rem 3rem; max-width: 1100px; margin: 0 auto; }
+    .spread-top-tag { font-family: 'Merriweather', serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8B6914; margin-bottom: 0.4rem; }
+    .spread-headline { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(1.6rem, 3.8vw, 2.7rem); line-height: 1.1; margin-bottom: 0.5rem; }
+    .spread-deck { font-family: 'Merriweather', serif; font-style: italic; font-weight: 300; font-size: clamp(0.85rem, 1.8vw, 1.1rem); line-height: 1.6; color: #3a3a3a; margin-bottom: 0.8rem; }
+    .spread-byline { font-family: 'Merriweather', serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5a5a5a; margin-bottom: 1.2rem; }
+    .spread-rule { border-top: 3px double #1a1a1a; margin-bottom: 1.5rem; }
+    .spread-meta-bar { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding: 0.75rem 1rem; background: rgba(0,0,0,0.03); border: 1px solid #1a1a1a; margin-bottom: 1.5rem; }
+    .spread-meta-item { display: flex; flex-direction: column; }
+    .spread-meta-key { font-family: 'Merriweather', serif; font-size: 0.52rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.5; }
+    .spread-meta-val { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.82rem; }
+    .spread-stat-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .spread-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem; }
+    .spread-three-col { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 1.5rem; }
+    .spread-body { font-family: 'Merriweather', serif; font-size: 0.83rem; line-height: 1.95; text-align: justify; }
+    .spread-body p { margin-bottom: 1rem; }
+    .spread-sidebar { border-left: 2px solid #1a1a1a; padding-left: 1.5rem; }
+    .spread-pull { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; font-weight: 700; line-height: 1.45; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; padding: 0.8rem 0.5rem; margin: 1.2rem 0; text-align: center; }
+    .spread-kicker-section { font-family: 'Merriweather', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-bottom: 1px solid #1a1a1a; padding-bottom: 2px; margin-bottom: 0.6rem; margin-top: 1.2rem; }
+    .spread-kicker-section:first-child { margin-top: 0; }
+    .spread-tag { display: inline-block; border: 1px solid #1a1a1a; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; margin: 2px; font-family: 'Merriweather', serif; }
+    .spread-img { width: 100%; border: 1px solid #1a1a1a; display: block; margin: 1rem 0; }
+    .spread-img-caption { font-family: 'Merriweather', serif; font-size: 0.58rem; font-style: italic; color: #5a5a5a; text-align: center; margin-top: 0.3rem; }
+    .spread-footer-strip { padding: 0.75rem 1.5rem; border-top: 2px solid #1a1a1a; background: #f4f1ea; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; flex-wrap: wrap; gap: 0.5rem; }
+    .spread-related-btn { font-family: 'Playfair Display', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid #1a1a1a; padding: 4px 10px; background: transparent; cursor: pointer; transition: background 0.15s ease, color 0.15s ease; }
+    .spread-related-btn:hover { background: #1a1a1a; color: #f4f1ea; }
+
+    /* Metadata Bar */
+    .metadata-bar { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; padding: 0.4rem 0.6rem; margin: 0.75rem 0 1rem; background: rgba(0,0,0,0.02); }
+    .meta-item { display: flex; flex-direction: column; }
+    .meta-key { font-family: 'Merriweather', serif; font-size: 0.48rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45; }
+    .meta-val { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.78rem; line-height: 1.2; }
+
+    /* Step List */
+    .step-list { list-style: none; padding: 0; margin: 0.6rem 0; }
+    .step-list li { font-family: 'Merriweather', serif; font-size: 0.75rem; line-height: 1.6; padding: 0.35rem 0; border-bottom: 1px dashed rgba(0,0,0,0.14); display: flex; gap: 0.5rem; align-items: baseline; }
+    .step-list li:last-child { border-bottom: none; }
+    .step-num { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 0.78rem; flex-shrink: 0; }
+
+    /* Print Button */
+    #print-btn { position: fixed; bottom: 1.4rem; right: 1.4rem; z-index: 4999; font-family: 'Playfair Display', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; border: 2px solid #1a1a1a; background: #1a1a1a; color: #f4f1ea; padding: 7px 15px; cursor: pointer; transition: all 0.18s ease; box-shadow: 3px 3px 0 rgba(0,0,0,0.25); }
+    #print-btn:hover { background: #f4f1ea; color: #1a1a1a; transform: translate(-2px,-2px); box-shadow: 5px 5px 0 rgba(0,0,0,0.2); }
+
+    /* Contact Links */
+    .contact-link-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; padding: 0.45rem 0.6rem; border-bottom: 1px dashed rgba(0,0,0,0.18); font-size: 0.78rem; cursor: pointer; transition: background 0.14s ease; }
+    .contact-link-row:hover { background: rgba(200,168,75,0.08); }
+    .contact-link-row:last-child { border-bottom: none; }
+    .contact-key { font-family: 'Merriweather', serif; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .contact-val a, .contact-val span { color: #1a1a1a; text-decoration: underline; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      .spread-two-col, .spread-three-col { grid-template-columns: 1fr; gap: 1.5rem; }
+      .spread-sidebar { border-left: none; border-top: 2px solid #1a1a1a; padding-left: 0; padding-top: 1.2rem; }
+      .spread-inner { padding: 1.5rem 1.2rem 3rem; }
+      .chapter-nav-btn { font-size: 0.52rem; padding: 6px 9px; }
+      #spread-panel { height: 93vh; }
+      .page-section { padding: 1.5rem 0 5rem; }
+      #skill-inspector { left: 1rem; right: 1rem; bottom: 4.5rem; max-width: none; }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Custom Interactive Reactive Cursor (Motion Primitives / Watermelon UI) -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-label">EXPLORE</div>
+
+<!-- Progress Bar -->
+<div id="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+<!-- Copy to Clipboard Toast Notification -->
+<div id="copy-toast" role="status" aria-live="polite">Copied to clipboard 🗞️</div>
+
+<!-- Toolkit Floating Inspector Micro-Modal -->
+<div id="skill-inspector">
+  <div class="flex items-center justify-between pb-1 border-b border-stone-600 mb-2">
+    <span class="text-[0.55rem] font-bold uppercase tracking-widest text-amber-400 font-mono" id="inspector-cat">PRODUCT SKILL</span>
+    <button onclick="closeInspector()" class="text-stone-400 hover:text-white text-xs font-mono">&times;</button>
+  </div>
+  <h4 class="font-['Playfair_Display'] font-black text-sm text-white mb-1" id="inspector-title">PRD Writing</h4>
+  <p class="font-['Merriweather'] text-[0.68rem] text-stone-300 leading-relaxed" id="inspector-desc">
+    Defined MVP scope, user acceptance criteria, and failure guardrails for Post Snap and OCR Studio.
+  </p>
+  <div class="mt-2 pt-1 border-t border-stone-700/60 flex justify-between items-center text-[0.5rem] text-stone-400 font-mono">
+    <span>EVIDENCE: SHIPPED IN VOLUME I</span>
+    <span class="text-amber-300">CLICK TO DISMISS</span>
+  </div>
+</div>
+
+<!-- ==============================================
+     UPDATES TICKER (VOLUME I)
+============================================== -->
+<div class="ticker-outer" role="region" aria-label="Latest Updates">
+  <span class="ticker-label">&#9670; Live Ticker</span>
+  <div class="ticker-track-wrapper">
+    <div class="ticker-track" id="ticker-track">
+      <span class="ticker-item">Shipped OCR Studio: on-device OCR for Indian scripts, live now</span>
+      <span class="ticker-item">Shipped Post Snap: X post link to PNG, live now</span>
+      <span class="ticker-item">Revived 13 of 25+ paused recruiters at the T&amp;P Cell</span>
+      <span class="ticker-item">Top 20 of 250+ teams at Epsilon 6.0, SSCBS Delhi</span>
+      <span class="ticker-item">Summer 2025 at L&amp;T: &#8377;65,000 Cr Narmada&ndash;Kshipra Link Project</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================
+     CHAPTER NAVIGATION (01 - 09)
+============================================== -->
+<nav id="chapter-nav" aria-label="Chapter navigation">
+  <div class="chapter-nav-inner">
+    <button class="chapter-nav-btn active-nav" data-page="page-cover" data-cursor="PAGE" onclick="showPage('page-cover')"><span class="chapter-num-badge">01</span><span class="chapter-nav-name">Cover</span></button>
+    <button class="chapter-nav-btn" data-page="page-about" data-cursor="PAGE" onclick="showPage('page-about')"><span class="chapter-num-badge">02</span><span class="chapter-nav-name">Letter</span></button>
+    <button class="chapter-nav-btn" data-page="page-build" data-cursor="SHIPPED" onclick="showPage('page-build')"><span class="chapter-num-badge">03</span><span class="chapter-nav-name">Build Desk</span></button>
+    <button class="chapter-nav-btn" data-page="page-leadership" data-cursor="PAGE" onclick="showPage('page-leadership')"><span class="chapter-num-badge">04</span><span class="chapter-nav-name">Leadership</span></button>
+    <button class="chapter-nav-btn" data-page="page-analysis" data-cursor="PAGE" onclick="showPage('page-analysis')"><span class="chapter-num-badge">05</span><span class="chapter-nav-name">Analysis</span></button>
+    <button class="chapter-nav-btn" data-page="page-field" data-cursor="PAGE" onclick="showPage('page-field')"><span class="chapter-num-badge">06</span><span class="chapter-nav-name">Field Notes</span></button>
+    <button class="chapter-nav-btn" data-page="page-skills" data-cursor="SKILLS" onclick="showPage('page-skills')"><span class="chapter-num-badge">07</span><span class="chapter-nav-name">Toolkit</span></button>
+    <button class="chapter-nav-btn" data-page="page-offclock" data-cursor="PAGE" onclick="showPage('page-offclock')"><span class="chapter-num-badge">08</span><span class="chapter-nav-name">Off Clock</span></button>
+    <button class="chapter-nav-btn" data-page="page-connect" data-cursor="TALK" onclick="showPage('page-connect')"><span class="chapter-num-badge">09</span><span class="chapter-nav-name">Connect</span></button>
+  </div>
+</nav>
+
+<!-- ==============================================
+     PAGES CONTAINER
+============================================== -->
+<div class="max-w-7xl mx-auto px-3 sm:px-6">
+<div class="pages-container">
+
+  <!-- ==================== PAGE 01: COVER ==================== -->
+  <div id="page-cover" class="page-section">
+
+    <!-- Masthead -->
+    <div class="text-center border-b border-black pb-5 mb-5">
+      <div class="py-1.5 mb-2 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4">
+        <span class="masthead-subtitle font-bold scramble-hover" data-scramble="VOLUME I">Volume I</span>
+        <span class="masthead-subtitle hidden sm:inline opacity-30">&bull;</span>
+        <span class="masthead-subtitle">Jhansi, Uttar Pradesh &middot; India</span>
+      </div>
+      <div class="double-rule mb-5"></div>
+      
+      <p class="journal-name-sup mb-1">Akash Yadav's</p>
+      <h1 class="journal-title text-effect" data-effect="chars">Journal</h1>
+      <div class="ornament-divider mt-2">&mdash; &#10022; &mdash;</div>
+      
+      <!-- Subheading with Text-Effect & Tagline -->
+      <p class="journal-subhead mt-3 text-effect" data-effect="words">Aspiring PM &middot; I find the problem, make the call, and ship it.</p>
+      <p class="journal-tagline mt-1.5 mb-2">Problems &middot; Decisions &middot; People &middot; Impact</p>
+
+      <!-- Above-the-Fold Live Product CTAs with Shimmer -->
+      <div class="flex flex-wrap justify-center items-center gap-2.5 sm:gap-4 mt-5">
+        <a href="https://ocrstudio.pages.dev" target="_blank" rel="noopener" class="cta-btn-primary" data-cursor="TRY APP">
+          <span>Try OCR Studio</span> <span>&rarr;</span>
+        </a>
+        <a href="https://postxsnap.pages.dev" target="_blank" rel="noopener" class="cta-btn-primary" data-cursor="TRY APP">
+          <span>Try Post Snap</span> <span>&rarr;</span>
+        </a>
+        <a href="https://drive.google.com/file/d/1cOty2uFoAYOoE7kN-v8eQ4IIUnPEaQad/view?usp=sharing" target="_blank" rel="noopener" class="cta-btn-secondary" data-cursor="PDF">
+          <span>View R&eacute;sum&eacute;</span> <span>&nearr;</span>
+        </a>
+        <a href="https://github.com/akashydv23" target="_blank" rel="noopener" class="cta-btn-secondary" data-cursor="CODE">
+          <svg class="w-3.5 h-3.5 inline mr-0.5" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+
+      <div class="double-rule mt-5 mb-3"></div>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4 py-1">
+        <span class="masthead-subtitle" onclick="copyContact('aakash.yadavv23@gmail.com', 'Email copied!')" data-cursor="COPY" title="Click to copy email"><a href="mailto:aakash.yadavv23@gmail.com" class="hover:underline">aakash.yadavv23@gmail.com</a></span>
+        <span class="masthead-subtitle hidden sm:inline opacity-30">&bull;</span>
+        <span class="masthead-subtitle" onclick="copyContact('+917380650624', 'Phone number copied!')" data-cursor="COPY" title="Click to copy phone"><a href="tel:+917380650624" class="hover:underline">+91 7380650624</a></span>
+        <span class="masthead-subtitle hidden sm:inline opacity-30">&bull;</span>
+        <span class="masthead-subtitle"><a href="https://linkedin.com/in/akash-yadavv" target="_blank" rel="noopener" class="hover:underline" data-cursor="VISIT">linkedin.com/in/akash-yadavv</a></span>
+      </div>
+    </div>
+
+    <!-- HERO PRODUCT MOCKUP STRIP WITH WATERMELON SPOTLIGHT -->
+    <div class="hero-mockup-strip spotlight-card fade-up mb-6" data-cursor="EXPLORE">
+      <div class="mockup-window-header">
+        <div class="mockup-dot-group">
+          <span class="mockup-dot"></span>
+          <span class="mockup-dot"></span>
+          <span class="mockup-dot"></span>
+        </div>
+        <span class="scramble-hover font-mono" data-scramble="SHIPPED PRODUCTS · LIVE PRODUCTION DEPLOYMENTS">Shipped Products &middot; Live Production Deployments &middot; Volume I Showcase</span>
+        <span class="text-amber-400 font-bold font-mono">&#9679; 2 LIVE APPS</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x-2 divide-black bg-[#faf8f4]">
+        
+        <!-- Left: OCR Studio Mockup Frame -->
+        <div class="p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="inline-block bg-black text-[#f4f1ea] text-[0.55rem] font-bold uppercase tracking-wider px-2 py-0.5 font-['Merriweather']">Product 01 &middot; Live</span>
+              <span class="text-[0.6rem] font-bold text-emerald-800 font-['Merriweather']">&#10003; 0 Uploads (Default Mode)</span>
+            </div>
+            <h3 class="font-['Playfair_Display'] text-xl font-black leading-tight mb-1">OCR Studio</h3>
+            <p class="font-['Merriweather'] text-xs text-stone-700 italic mb-3">Reliable, zero-install OCR for Indian scripts running entirely in the browser.</p>
+            
+            <!-- Visual Device Mockup -->
+            <div class="border border-black bg-white p-3 shadow-inner my-2">
+              <div class="flex items-center justify-between text-[0.52rem] font-bold text-stone-500 uppercase border-b border-stone-200 pb-1 mb-2 font-mono">
+                <span>Input: Devanagari Scan</span>
+                <span class="text-black font-extrabold">&rarr; Review Studio (36 Tests)</span>
+                <span>Export: Searchable PDF</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[0.65rem] font-mono bg-stone-50 p-2 border border-stone-200">
+                <div class="p-1.5 bg-amber-50/50 border border-amber-200 text-stone-800">
+                  <div class="text-[0.5rem] uppercase font-bold text-stone-500 mb-0.5 font-mono">Original Scan</div>
+                  न्यायालय आदेश पत्र...<br/>
+                  <span class="bg-red-100 text-red-800 px-0.5">[Degraded Text]</span>
+                </div>
+                <div class="p-1.5 bg-emerald-50/50 border border-emerald-200 text-stone-800">
+                  <div class="text-[0.5rem] uppercase font-bold text-stone-500 mb-0.5 font-mono">Diff Proposal Drawer</div>
+                  न्यायालय आदेश पत्र...<br/>
+                  <span class="bg-emerald-100 text-emerald-800 font-bold px-0.5">&plus; Proposed Fix (Diff)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between pt-2 border-t border-stone-300">
+            <span class="text-[0.62rem] font-bold font-['Merriweather']">13 Indian Scripts &middot; ~3.2s / page</span>
+            <a href="https://ocrstudio.pages.dev" target="_blank" rel="noopener" class="text-xs font-black underline font-['Playfair_Display'] hover:text-amber-800" data-cursor="TRY">Open Studio &nearr;</a>
+          </div>
+        </div>
+
+        <!-- Right: Post Snap Mockup Frame -->
+        <div class="p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="inline-block bg-black text-[#f4f1ea] text-[0.55rem] font-bold uppercase tracking-wider px-2 py-0.5 font-['Merriweather']">Product 02 &middot; Live</span>
+              <span class="text-[0.6rem] font-bold text-emerald-800 font-['Merriweather']">&#10003; 95%+ Visual Fidelity</span>
+            </div>
+            <h3 class="font-['Playfair_Display'] text-xl font-black leading-tight mb-1">Post Snap</h3>
+            <p class="font-['Merriweather'] text-xs text-stone-700 italic mb-3">Paste an X post link, get a clean PNG. If it is a recreation, it says so honestly.</p>
+            
+            <!-- Visual Device Mockup -->
+            <div class="border border-black bg-white p-3 shadow-inner my-2">
+              <div class="flex items-center justify-between text-[0.52rem] font-bold text-stone-500 uppercase border-b border-stone-200 pb-1 mb-2 font-mono">
+                <span>Link Input: x.com/...</span>
+                <span class="text-black font-extrabold">&rarr; Canvas Engine</span>
+                <span class="text-amber-700 font-bold">Label: Captured vs Recreated</span>
+              </div>
+              <div class="bg-stone-50 p-2.5 border border-stone-200 text-stone-900 text-xs font-sans">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <div class="w-5 h-5 rounded-full bg-stone-300 flex items-center justify-center font-bold text-[0.55rem]">X</div>
+                  <div>
+                    <div class="font-bold text-[0.68rem] leading-none">Author Name <span class="text-stone-400 font-normal">@handle</span></div>
+                  </div>
+                </div>
+                <p class="text-[0.68rem] text-stone-800 leading-tight">Full post content rendered without screenshot clutter or mobile UI bars...</p>
+                <div class="mt-2 pt-1 border-t border-stone-200 flex justify-between items-center text-[0.5rem] text-stone-500">
+                  <span class="border border-stone-400 px-1 font-mono uppercase bg-white">Disclosure: Captured from X</span>
+                  <span class="font-mono">PNG Export &bull; &lt; 5s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between pt-2 border-t border-stone-300">
+            <span class="text-[0.62rem] font-bold font-['Merriweather']">90%+ Conversion &middot; Median &lt;5s</span>
+            <a href="https://postxsnap.pages.dev" target="_blank" rel="noopener" class="text-xs font-black underline font-['Playfair_Display'] hover:text-amber-800" data-cursor="TRY">Try Post Snap &nearr;</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Featured Quote — prominent on cover -->
+    <div id="cover-quote" class="iq-wrap cover-iq fade-up">
+      <div style="font-family:'Merriweather',serif;font-size:0.5rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;opacity:0.4;margin-bottom:0.75rem;position:relative;z-index:1;">From the Editor's Desk</div>
+      <p class="iq-text text-effect" data-effect="words">&ldquo;My story won&rsquo;t end at &lsquo;he had potential,&rsquo; or &lsquo;he had a bright future,&rsquo; or &lsquo;he was destined for greatness.&rsquo; I&rsquo;ll go ahead and actually become all of that. I&rsquo;ll live out my potential and reach the highest level I possibly can.&rdquo;</p>
+      <p class="iq-attr">&mdash; Akash Yadav &nbsp;&middot;&nbsp; By me, for me.</p>
+    </div>
+
+    <!-- Front Page Broadsheet Photo Plate -->
+    <div class="border border-black bg-stone-50 mb-6 spotlight-card fade-up">
+      <div class="border-b border-black py-1.5 px-4 bg-stone-100 flex items-center justify-between">
+        <span class="text-[0.55rem] font-bold uppercase tracking-widest font-mono text-stone-600">&#9670; Front Page Broadsheet Archive &middot; Edition Dispatch</span>
+        <span class="text-[0.55rem] font-bold font-mono text-amber-800 uppercase">Living The Potential</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-black p-3.5 gap-3.5 bg-[#faf8f4]">
+        <figure class="border border-black p-1.5 bg-[#eae6df]">
+          <img src="assets/kohli_newspaper_cutout.jpg" alt="Virat Kohli newspaper headlines montage" class="w-full h-56 sm:h-64 object-cover border border-black/40 grayscale hover:grayscale-0 transition duration-300">
+          <figcaption class="font-serif italic text-xs text-center mt-2 text-stone-800 leading-snug">
+            &ldquo;A song by god &middot; Headlines that chronicled an era of relentless pursuit.&rdquo;
+          </figcaption>
+        </figure>
+        <figure class="border border-black p-1.5 bg-[#eae6df]">
+          <img src="assets/kohli_leap.jpg" alt="Virat Kohli mid-air leap punch celebration" class="w-full h-56 sm:h-64 object-cover border border-black/40 grayscale hover:grayscale-0 transition duration-300">
+          <figcaption class="font-serif italic text-xs text-center mt-2 text-stone-800 leading-snug">
+            &ldquo;Living out the potential &middot; The roar of passion when the work speaks.&rdquo;
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Table of Contents (01 - 09 Order with Spotlight Cards) -->
+    <div class="section-label mb-0">Table of Contents &middot; Volume I</div>
+    <div class="border border-t-0 border-black p-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-about')" data-cursor="CHAPTER 02">
+          <p class="toc-card-num">02 &middot; Editor's Letter &amp; Dossier</p>
+          <p class="toc-card-title">A Note Before You Read</p>
+          <p class="toc-card-desc">Curiosity beyond the résumé, core mission, and current conditions report.</p>
+          <p class="toc-card-action">Read &rarr; Letter</p>
+        </div>
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-build')" data-cursor="CHAPTER 03">
+          <p class="toc-card-num">03 &middot; Build Desk (Shipped Products)</p>
+          <p class="toc-card-title">OCR Studio &amp; Post Snap</p>
+          <p class="toc-card-desc">Two live products: on-device privacy OCR &amp; honest X screenshot converter.</p>
+          <p class="toc-card-action font-bold text-amber-800">Read &rarr; Case Studies 01 &amp; 02</p>
+        </div>
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-leadership')" data-cursor="CHAPTER 04">
+          <p class="toc-card-num">04 &middot; Leadership Notes</p>
+          <p class="toc-card-title">Fixing a Broken Recruiter Pipeline</p>
+          <p class="toc-card-desc">T&amp;P Cell Secretary: 13 of 25+ revived recruiters, 60+ team, 1,200+ students served.</p>
+          <p class="toc-card-action">Read &rarr; Leadership</p>
+        </div>
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-analysis')" data-cursor="CHAPTER 05">
+          <p class="toc-card-num">05 &middot; Analysis Desk</p>
+          <p class="toc-card-title">Hospitality &amp; Epsilon 6.0</p>
+          <p class="toc-card-desc">10,000+ bookings (&#8377;10.88 L / 62.3% ROI) and OTT budget war-games.</p>
+          <p class="toc-card-action">Read &rarr; Case Studies 03 &amp; 04</p>
+        </div>
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-field')" data-cursor="CHAPTER 06">
+          <p class="toc-card-num">06 &middot; Field Notes</p>
+          <p class="toc-card-title">Inside a &#8377;65,000 Cr Water Project</p>
+          <p class="toc-card-desc">Summer 2025 at Larsen &amp; Toubro: SCADA telemetry, hydraulic nodes &amp; scale.</p>
+          <p class="toc-card-action">Read &rarr; Field Notes</p>
+        </div>
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-skills')" data-cursor="CHAPTER 07">
+          <p class="toc-card-num">07 &middot; The Toolkit</p>
+          <p class="toc-card-title">Product, Data &amp; Credentials</p>
+          <p class="toc-card-desc">PRD writing, user research, SQL, Tableau, Figma, BIET Jhansi, IIT Guwahati.</p>
+          <p class="toc-card-action">Read &rarr; Toolkit</p>
+        </div>
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-offclock')" data-cursor="CHAPTER 08">
+          <p class="toc-card-num">08 &middot; Off the Clock</p>
+          <p class="toc-card-title">Cricket, Kohli &amp; Love for the Game</p>
+          <p class="toc-card-desc">When the laptop closes: passion, high standards and never settling.</p>
+          <p class="toc-card-action">Read &rarr; Off Clock</p>
+        </div>
+
+        <div class="toc-card spotlight-card" onclick="showPage('page-connect')" data-cursor="CHAPTER 09">
+          <p class="toc-card-num">09 &middot; Connect</p>
+          <p class="toc-card-title">Got a Problem Worth Solving?</p>
+          <p class="toc-card-desc">Open for APM/PM internships &amp; collaborative builds. Let's talk.</p>
+          <p class="toc-card-action">Read &rarr; Connect</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer strip -->
+    <div class="border border-t-0 border-black py-2 px-5 text-center">
+      <p class="masthead-subtitle opacity-60" style="font-size:0.55rem;">Akash Yadav's Journal &middot; Volume I &middot; Work in Progress. Always.</p>
+    </div>
+
+  </div><!-- /page-cover -->
+
+  <!-- ==================== PAGE 02: ABOUT / LETTER ==================== -->
+  <div id="page-about" class="page-section">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-0 border border-black">
+
+      <!-- Editor's Letter (left) -->
+      <div class="lg:col-span-3 p-6 border-b lg:border-b-0 lg:border-r border-black fade-up flex flex-col justify-between">
+        <div>
+          <span class="chapter-label">02 &middot; Editor's Letter</span>
+          <h2 class="article-headline text-[clamp(1.4rem,3.5vw,2.2rem)] mb-3 leading-tight text-effect" data-effect="words">A Note Before You Read</h2>
+          
+          <p class="article-body drop-cap">
+            I've always been drawn to what happens before a decision is made — how a problem is understood, what evidence matters, and why one path is chosen over another. That thread connects civil engineering, large-scale telemetry at L&amp;T, leading placement operations at BIET Jhansi, and building live software.
+          </p>
+          <p class="article-body mt-3 font-semibold text-stone-900 bg-stone-100 p-3 border-l-4 border-black">
+            That curiosity now lives outside a r&eacute;sum&eacute;. I build products for problems I see clearly, with decisions I have to defend. Welcome to Volume I.
+          </p>
+          <p class="article-byline mt-3">&mdash; Akash Yadav &nbsp;&middot;&nbsp; Editor, Author &amp; Work in Progress</p>
+        </div>
+
+        <!-- Visual Vignettes from Editor's Desk (Triptych) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-6 pt-4 border-t border-black">
+          <figure class="border border-black p-1.5 bg-[#eae6df]">
+            <img src="assets/editor_cat.png" alt="What if I can't? But what if I can?" class="w-full h-32 object-cover border border-black/40 grayscale hover:grayscale-0 transition duration-300">
+            <figcaption class="font-serif italic text-[0.65rem] text-center mt-1 text-stone-800 leading-snug">
+              &ldquo;What if I can?&rdquo;
+            </figcaption>
+          </figure>
+          <figure class="border border-black p-1.5 bg-[#eae6df]">
+            <img src="assets/kohli_believe.jpg" alt="Virat Kohli - Believe" class="w-full h-32 object-cover border border-black/40 grayscale hover:grayscale-0 transition duration-300">
+            <figcaption class="font-serif italic text-[0.65rem] text-center mt-1 text-stone-800 leading-snug font-bold">
+              &ldquo;Believe. Always.&rdquo;
+            </figcaption>
+          </figure>
+          <figure class="border border-black p-1.5 bg-[#eae6df]">
+            <img src="assets/editor_tiger.jpg" alt="Who would I be if I erased everything that made me who I am?" class="w-full h-32 object-cover border border-black/40 grayscale hover:grayscale-0 transition duration-300">
+            <figcaption class="font-serif italic text-[0.65rem] text-center mt-1 text-stone-800 leading-snug">
+              &ldquo;Who would I be?&rdquo;
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- Journal Entry 01 + Dossier (right) -->
+      <div class="lg:col-span-2 p-6 fade-up">
+        <span class="chapter-label">02 &middot; Journal Entry 01</span>
+        <h2 class="article-headline text-[clamp(1.1rem,2.5vw,1.6rem)] mb-3 leading-tight">From Engineering Problems to Product Decisions</h2>
+        <p class="article-body" style="font-size:0.78rem;">
+          I'm Akash Yadav, a B.Tech Civil Engineering student at BIET Jhansi. My academic training began with engineering — structures, systems and the logic behind how things are built — but over time, I found myself becoming increasingly interested in a different layer of problems: the decisions behind them.
+        </p>
+        <p class="article-body mt-2" style="font-size:0.78rem;">
+          Why is one solution chosen over another? What does the user actually need? How do you make a trade-off when constraints hit? Those questions turned my focus toward Product Management.
+        </p>
+
+        <div class="ornament-divider my-4">&mdash; &#10022; &mdash;</div>
+
+        <!-- Intelligence Dossier (PM Focused) -->
+        <p class="article-kicker mb-2">Intelligence Dossier</p>
+        <div class="weather-box mb-4">
+          <div class="weather-row"><span class="weather-key">Name</span><span class="weather-val">Akash Yadav</span></div>
+          <div class="weather-row"><span class="weather-key">Institution</span><span class="weather-val">BIET Jhansi</span></div>
+          <div class="weather-row"><span class="weather-key">Degree</span><span class="weather-val">B.Tech &middot; 2023 &ndash; 2027</span></div>
+          <div class="weather-row"><span class="weather-key">Interests</span><span class="weather-val">Product &middot; Analytics &middot; Technology &middot; Strategy</span></div>
+          <div class="weather-row"><span class="weather-key">Mission</span><span class="weather-val">Learning to solve better problems.</span></div>
+        </div>
+
+        <!-- Current Conditions Report -->
+        <p class="article-kicker mb-2">Current Conditions Report</p>
+        <div class="weather-box">
+          <div class="weather-row"><span class="weather-key">Status</span><span class="weather-val">Open to APM/PM roles &amp; internships</span></div>
+          <div class="weather-row"><span class="weather-key">Areas of Interest</span><span class="weather-val">Product Management &middot; Business Analytics &middot; Strategy</span></div>
+          <div class="weather-row"><span class="weather-key">Toolkit</span><span class="weather-val">SQL &middot; Tableau &middot; Prototyping &middot; PRDs</span></div>
+          <div class="weather-row"><span class="weather-key">Location</span><span class="weather-val">India &middot; Open to opportunities</span></div>
+          <div class="weather-row"><span class="weather-key">Forecast</span><span class="weather-val">Curious, learning and shipping.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /page-about -->
+
+  <!-- ==================== PAGE 03: BUILD DESK (SHIPPED PRODUCTS) ==================== -->
+  <div id="page-build" class="page-section">
+    <div class="section-label mb-0">03 &middot; Build Desk &middot; Shipped Products (APM Proof)</div>
+    <div class="border border-t-0 border-black">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x border-b border-black">
+
+        <!-- Case Study 01 · OCR Studio (Clean & Crisp Summary) -->
+        <div class="p-6 md:p-8 story-card spotlight-card fade-up flex flex-col justify-between cursor-pointer group" onclick="openSpread('ocr')" data-cursor="CASE STUDY">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="chapter-label mb-0">Case Study 01 &middot; Live Product</span>
+              <span class="text-[0.62rem] font-mono uppercase tracking-widest text-emerald-800 bg-emerald-50 px-2 py-0.5 border border-emerald-300 font-bold">Shipped &bull; Live</span>
+            </div>
+            
+            <h3 class="article-headline text-[clamp(1.25rem,2.5vw,1.8rem)] mb-2 leading-tight group-hover:text-amber-900 transition-colors">
+              OCR Studio: Reliable OCR for Indian Languages
+            </h3>
+            
+            <p class="article-deck text-sm text-stone-700 mb-4 leading-relaxed font-serif">
+              A zero-install OCR platform for Indian scripts running entirely in the browser. Zero documents leave the device.
+            </p>
+
+            <!-- Stat Badges Strip -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <div class="stat-badge"><span class="stat-num" data-val="13">13</span><span class="stat-label">Indian Scripts</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="36">36</span><span class="stat-label">Automated Tests</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="3.2" data-prefix="~" data-suffix="s">~3.2s</span><span class="stat-label">On-Device Speed</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="0">0</span><span class="stat-label">Server Uploads</span></div>
+            </div>
+
+            <!-- Crisp Problem / Solution Teaser -->
+            <p class="article-body text-xs md:text-sm text-stone-700 leading-relaxed border-l-2 border-black pl-3 mb-4">
+              Most OCR tools fail on complex Indian conjuncts or require uploading confidential legal documents to third-party servers. OCR Studio eliminates both trade-offs through client-side WebAssembly recognition and a transparent diff-review engine.
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-black/20 flex flex-wrap items-center justify-between gap-3">
+            <span class="read-btn text-xs font-bold uppercase tracking-wider group-hover:underline flex items-center gap-1.5" style="margin-top:0;">
+              Read Full Case Study <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+            </span>
+            <div class="flex items-center gap-3" onclick="event.stopPropagation()">
+              <a href="https://ocrstudio.pages.dev" target="_blank" rel="noopener" class="text-xs font-bold underline hover:text-amber-800" data-cursor="OPEN APP">Try Live ↗</a>
+              <a href="https://github.com/akashydv23/OCR" target="_blank" rel="noopener" class="text-xs font-bold underline hover:text-amber-800" data-cursor="GITHUB">GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case Study 02 · Post Snap (Clean & Crisp Summary) -->
+        <div class="p-6 md:p-8 story-card spotlight-card fade-up flex flex-col justify-between cursor-pointer group" onclick="openSpread('postsnap')" data-cursor="CASE STUDY">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="chapter-label mb-0">Case Study 02 &middot; Live Product</span>
+              <span class="text-[0.62rem] font-mono uppercase tracking-widest text-emerald-800 bg-emerald-50 px-2 py-0.5 border border-emerald-300 font-bold">Shipped &bull; Live</span>
+            </div>
+
+            <h3 class="article-headline text-[clamp(1.25rem,2.5vw,1.8rem)] mb-2 leading-tight group-hover:text-amber-900 transition-colors">
+              Post Snap: Turning an X Post into a Clean Image, Honestly
+            </h3>
+
+            <p class="article-deck text-sm text-stone-700 mb-4 leading-relaxed font-serif">
+              Paste a post link, get a high-resolution PNG. If a post must be reconstructed, transparency is baked in with explicit disclosure.
+            </p>
+
+            <!-- Stat Badges Strip -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <div class="stat-badge"><span class="stat-num" data-val="90" data-suffix="%+">90%+</span><span class="stat-label">Conversion Rate</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="5" data-prefix="&lt;" data-suffix="s">&lt;5s</span><span class="stat-label">Gen Time</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="95" data-suffix="%+">95%+</span><span class="stat-label">Fidelity Pass</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="0">0</span><span class="stat-label">Logins Needed</span></div>
+            </div>
+
+            <!-- Crisp Problem / Solution Teaser -->
+            <p class="article-body text-xs md:text-sm text-stone-700 leading-relaxed border-l-2 border-black pl-3 mb-4">
+              Manual screenshots bring interface noise and clipped threads. Built PRD-first with strict acceptance criteria, Post Snap captures official renders first and labels recreations clearly so viewers are never misled.
+            </p>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-black/20 flex flex-wrap items-center justify-between gap-3">
+            <span class="read-btn text-xs font-bold uppercase tracking-wider group-hover:underline flex items-center gap-1.5" style="margin-top:0;">
+              Read Full Case Study <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+            </span>
+            <div class="flex items-center gap-3" onclick="event.stopPropagation()">
+              <a href="https://postxsnap.pages.dev" target="_blank" rel="noopener" class="text-xs font-bold underline hover:text-amber-800" data-cursor="TRY APP">Try Live ↗</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /page-build -->
+
+  <!-- ==================== PAGE 04: LEADERSHIP NOTES ==================== -->
+  <div id="page-leadership" class="page-section">
+    <div class="section-label mb-0">04 &middot; Leadership Notes &middot; T&amp;P Cell Operations</div>
+    <div class="border border-t-0 border-black p-6 story-card spotlight-card fade-up" onclick="openSpread('tp')" data-cursor="LEADERSHIP">
+      <span class="chapter-label">Leadership Case Study</span>
+      <p class="article-kicker mb-1">Secretary &middot; Training &amp; Placement Cell &middot; BIET Jhansi</p>
+      <h3 class="article-headline text-[clamp(1.4rem,3.5vw,2.4rem)] mb-1 leading-tight text-effect" data-effect="words">
+        From Coordinator to Secretary: Fixing a Broken Recruiter Pipeline
+      </h3>
+      <p class="article-deck text-base mb-3">
+        13 of 25+ recruiters who had paused hiring came back.
+      </p>
+
+      <div class="metadata-bar">
+        <div class="meta-item"><span class="meta-key">Progression</span><span class="meta-val">Coordinator &rarr; Deputy Secretary &rarr; Secretary</span></div>
+        <div class="meta-item"><span class="meta-key">Tenure</span><span class="meta-val">September 2024 &ndash; Present</span></div>
+        <div class="meta-item"><span class="meta-key">Institution</span><span class="meta-val">BIET Jhansi &middot; 4 Regional Colleges</span></div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-5">
+        <div class="stat-badge"><span class="stat-num" data-val="13" data-suffix="/25+">13/25+</span><span class="stat-label">Revived Recruiters</span></div>
+        <div class="stat-badge"><span class="stat-num" data-val="15" data-suffix="+">15+</span><span class="stat-label">New Recruiters</span></div>
+        <div class="stat-badge"><span class="stat-num" data-val="60" data-suffix="+">60+</span><span class="stat-label">Team Managed</span></div>
+        <div class="stat-badge"><span class="stat-num" data-val="1200" data-suffix="+">1,200+</span><span class="stat-label">Students Served</span></div>
+      </div>
+
+      <!-- Infographic Box -->
+      <div class="border border-black bg-white p-4 mb-5 max-w-xl shadow-sm">
+        <p class="text-xs font-bold uppercase tracking-wider text-stone-600 mb-2 font-['Merriweather']">Recruiter Retention Turnaround</p>
+        <div class="flex items-center gap-4 text-center">
+          <div class="flex-1 p-2 bg-stone-100 border border-stone-300">
+            <span class="block text-2xl font-black font-['Playfair_Display'] text-red-800">25+</span>
+            <span class="text-[0.55rem] uppercase font-bold text-stone-500 font-['Merriweather']">Paused Recruiters</span>
+          </div>
+          <div class="text-xl font-bold">&rarr;</div>
+          <div class="flex-1 p-2 bg-emerald-50 border border-emerald-300">
+            <span class="block text-2xl font-black font-['Playfair_Display'] text-emerald-800">13</span>
+            <span class="text-[0.55rem] uppercase font-bold text-emerald-700 font-['Merriweather']">Revived &amp; Hiring</span>
+          </div>
+          <div class="text-xl font-bold">&plus;</div>
+          <div class="flex-1 p-2 bg-amber-50 border border-amber-300">
+            <span class="block text-2xl font-black font-['Playfair_Display'] text-amber-900">15+</span>
+            <span class="text-[0.55rem] uppercase font-bold text-amber-700 font-['Merriweather']">New Partners</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <p class="article-body drop-cap">
+            More than 25 recruiters who used to hire from BIET had stopped. When I asked why, the reasons were poor past experiences and follow-ups that came too late. The issue was not that recruiters did not want our students. We had made working with us frustrating.
+          </p>
+          <p class="article-body mt-3">
+            <strong>What I Changed:</strong> I redesigned outreach across 1,000+ recruiters: segmenting them by sector, giving each coordinator clear ownership, and tracking follow-ups on a schedule so nobody waited on us.
+          </p>
+        </div>
+        <div>
+          <p class="article-body">
+            <strong>The Pool Campus Drive:</strong> BIET's first Pool Campus Drive brought four colleges and recruiters together and led to 59 selections, 28 of them from BIET. It was formulated to aggregate regional talent pool density and attract Tier-1 recruiters who previously bypassed individual regional colleges.
+          </p>
+          <div class="pull-quote my-3">
+            "Placement is a two-sided marketplace, and it only works when both sides trust it."
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4"><span class="read-btn">Read Leadership Notes <span>&rarr;</span></span></div>
+    </div>
+  </div><!-- /page-leadership -->
+
+  <!-- ==================== PAGE 05: ANALYSIS DESK ==================== -->
+  <div id="page-analysis" class="page-section">
+    <div class="section-label mb-0">05 &middot; Analysis Desk &middot; Data, Strategy &amp; Prioritisation</div>
+    <div class="border border-t-0 border-black">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 divide-y lg:divide-y-0 lg:divide-x border-b border-black">
+
+        <!-- Case Study 03 · Hospitality -->
+        <div class="p-6 story-card spotlight-card fade-up flex flex-col justify-between" onclick="openSpread('hosp')" data-cursor="CASE STUDY">
+          <div>
+            <span class="chapter-label">Case Study 03 &middot; Business Analytics</span>
+            <p class="article-kicker mb-1">Hospitality Sector &middot; Revenue Optimization</p>
+            <h3 class="article-headline text-[clamp(1.2rem,2.8vw,1.9rem)] mb-1 leading-tight text-effect" data-effect="words">
+              Where Does the Revenue Go?
+            </h3>
+            <p class="article-deck text-sm mb-2">
+              Optimizing revenue leakage across 10,000+ bookings in 4 metro markets.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              <div class="stat-badge"><span class="stat-num" data-val="10" data-suffix="K+">10K+</span><span class="stat-label">Bookings</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="4">4</span><span class="stat-label">Cities</span></div>
+              <div class="stat-badge"><span class="stat-num">&#8377;10.88L</span><span class="stat-label">Projected Rev</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="62.3" data-suffix="%">62.3%</span><span class="stat-label">Projected ROI</span></div>
+            </div>
+
+            <p class="article-body drop-cap">
+              I analysed 10,000+ bookings across Delhi, Mumbai, Hyderabad and Bangalore to find where hotels were losing revenue: through pricing gaps, cancellations and underused capacity. Finding the pattern was half the work. The other half was deciding what to do about it, so I built segment-specific pricing and bundling recommendations and modelled the scenarios, projecting &#8377;10.88 L of additional revenue at 62.3% ROI.
+            </p>
+
+            <div class="border border-black mt-3 overflow-hidden">
+              <img src="assets/hosp_dash.jpg" alt="Tableau Dashboard screenshot for hospitality analytics" class="w-full h-36 object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-black/20 flex flex-wrap items-center justify-between gap-3">
+            <span class="read-btn text-xs font-bold uppercase tracking-wider group-hover:underline flex items-center gap-1.5" style="margin-top:0;">
+              Read Case Study <span class="transition-transform group-hover:translate-x-1">&rarr;</span>
+            </span>
+            <div class="flex items-center gap-3" onclick="event.stopPropagation()">
+              <a href="https://hospitality-revenue.pages.dev" target="_blank" rel="noopener" class="text-xs font-bold underline hover:text-amber-800" data-cursor="LIVE APP" id="hosp-card-link">Live Project ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case Study 04 · Epsilon 6.0 -->
+        <div class="p-6 story-card spotlight-card fade-up flex flex-col justify-between" onclick="openSpread('eps')" data-cursor="CASE STUDY">
+          <div>
+            <span class="chapter-label">Case Study 04 &middot; National Strategy</span>
+            <p class="article-kicker mb-1">Epsilon 6.0 &middot; SSCBS, University of Delhi</p>
+            <h3 class="article-headline text-[clamp(1.2rem,2.8vw,1.9rem)] mb-1 leading-tight text-effect" data-effect="words">
+              Strategy Under Constraints
+            </h3>
+            <p class="article-deck text-sm mb-2">
+              National Top 20 finish among 250+ teams at India's premier strategy competition.
+            </p>
+
+            <div class="flex flex-wrap gap-2 mb-4">
+              <div class="stat-badge"><span class="stat-num">Top 20</span><span class="stat-label">National Finish</span></div>
+              <div class="stat-badge"><span class="stat-num" data-val="250" data-suffix="+">250+</span><span class="stat-label">Teams</span></div>
+              <div class="stat-badge"><span class="stat-num">&#8377;700Cr</span><span class="stat-label">Scenario A</span></div>
+              <div class="stat-badge"><span class="stat-num">&#8377;1,000Cr</span><span class="stat-label">Scenario B</span></div>
+            </div>
+
+            <p class="article-body drop-cap">
+              We had to decide how two streaming platforms should spend fixed budgets on content. The hard part was not picking the best titles. It was choosing the best combination under a budget, weighing viewership, revenue potential, ratings, exclusivity and reach. That is a prioritisation problem, and it is the part of the work I enjoy most.
+            </p>
+
+            <div class="border border-black mt-3 overflow-hidden">
+              <img src="assets/epsilon_cover.jpg" alt="Epsilon 6.0 Competition Cover" class="w-full h-36 object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+          </div>
+          <div class="mt-4"><span class="read-btn">Read Case Study <span>&rarr;</span></span></div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /page-analysis -->
+
+  <!-- ==================== PAGE 06: FIELD NOTES (L&T) ==================== -->
+  <div id="page-field" class="page-section">
+    <div class="section-label mb-0">06 &middot; Field Notes &middot; Larsen &amp; Toubro</div>
+    <div class="border border-t-0 border-black p-6 story-card spotlight-card fade-up" onclick="openSpread('lt')" data-cursor="FIELD NOTES">
+      <span class="chapter-label">Summer Internship &middot; Summer 2025</span>
+      <h3 class="article-headline text-[clamp(1.4rem,3.5vw,2.4rem)] mb-1 leading-tight text-effect" data-effect="words">
+        Inside a &#8377;65,000 Cr Water Infrastructure Project
+      </h3>
+      <p class="article-deck text-base mb-3">
+        Narmada&ndash;Kshipra Link Project &middot; Indore, Madhya Pradesh
+      </p>
+
+      <div class="flex flex-wrap gap-2 mb-5">
+        <div class="stat-badge"><span class="stat-num">&#8377;65K Cr</span><span class="stat-label">Project Scale</span></div>
+        <div class="stat-badge"><span class="stat-num" data-val="163">163</span><span class="stat-label">Villages</span></div>
+        <div class="stat-badge"><span class="stat-num">~30,000</span><span class="stat-label">Hectares</span></div>
+        <div class="stat-badge"><span class="stat-num" data-val="6">6</span><span class="stat-label">Pressure Tanks</span></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div>
+          <p class="article-body drop-cap">
+            During my summer at Larsen &amp; Toubro, I studied the execution framework of the Narmada&ndash;Kshipra Link Project and how SCADA systems monitor pumps, power use and water flow across its break pressure tanks. It was my first close look at how data, operations and large-scale delivery fit together.
+          </p>
+          <div class="pull-quote my-3">
+            "Recommended real-time sensor anomaly telemetry logging to pre-empt hydraulic pressure surges before physical release valves trigger."
+          </div>
+        </div>
+        <div class="border border-black overflow-hidden">
+          <img src="assets/lt_scada.jpg" alt="SCADA systems monitoring telemetry" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" />
+        </div>
+      </div>
+
+      <div class="mt-4"><span class="read-btn">Read Field Notes <span>&rarr;</span></span></div>
+    </div>
+  </div><!-- /page-field -->
+
+  <!-- ==================== PAGE 07: TOOLKIT & EDUCATION ==================== -->
+  <div id="page-skills" class="page-section">
+    <div class="section-label mb-0">07 &middot; The Toolkit &middot; Product, Data &amp; Credentials</div>
+    <div class="border border-t-0 border-black">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+
+        <!-- Skills Columns with Watermelon Interactive Category Filters & Interactive Chips -->
+        <div class="lg:col-span-2 p-5 border-b lg:border-b-0 lg:border-r border-black fade-up">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div>
+              <span class="chapter-label">The Core Toolkit</span>
+              <h3 class="article-headline text-[clamp(1.1rem,2.5vw,1.7rem)] leading-tight">Skills &amp; Methodologies</h3>
+            </div>
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap gap-1">
+              <button onclick="filterSkills('all')" class="filter-btn active-filter" id="filter-all-btn">All</button>
+              <button onclick="filterSkills('product')" class="filter-btn" id="filter-product-btn">Product</button>
+              <button onclick="filterSkills('data')" class="filter-btn" id="filter-data-btn">Data</button>
+              <button onclick="filterSkills('build')" class="filter-btn" id="filter-build-btn">Build</button>
+            </div>
+          </div>
+
+          <p class="text-[0.62rem] text-stone-500 italic mb-4 font-['Merriweather']">
+            💡 Click on any skill pill to view the exact problem, project and context where Akash deployed it.
+          </p>
+
+          <div class="space-y-4" id="skills-grid">
+            <div class="skill-group-box" data-cat="product">
+              <p class="skill-cat-head">Product Management</p>
+              <div class="flex flex-wrap gap-1.5 mt-1">
+                <span class="skill-tag" onclick="inspectSkill('Prioritisation Frameworks','Product','Deployed in Epsilon 6.0 and Post Snap MVP scope. Used multi-criteria matrices to balance user reach vs technical feasibility under budget caps.')" data-cursor="INSPECT">Prioritisation Frameworks</span>
+                <span class="skill-tag" onclick="inspectSkill('PRD Writing','Product','Authored comprehensive product requirements for Post Snap & OCR Studio including functional requirements, failure modes, and acceptance targets.')" data-cursor="INSPECT">PRD Writing</span>
+                <span class="skill-tag" onclick="inspectSkill('Product Strategy','Product','Framed privacy as core value proposition rather than feature for OCR Studio. Positioned Post Snap on transparency disclosure.')" data-cursor="INSPECT">Product Strategy</span>
+                <span class="skill-tag" onclick="inspectSkill('User Research','Product','Interviewed legal researchers and field clerks with patchy connectivity to establish on-device client requirements for document digitisation.')" data-cursor="INSPECT">User Research</span>
+                <span class="skill-tag" onclick="inspectSkill('Market Research','Product','Analyzed 25+ churned enterprise recruiters at BIET T&P Cell and competitive positioning for hospitality revenue optimization.')" data-cursor="INSPECT">Market Research</span>
+              </div>
+            </div>
+
+            <div class="skill-group-box" data-cat="data">
+              <p class="skill-cat-head">Data and Analytics</p>
+              <div class="flex flex-wrap gap-1.5 mt-1">
+                <span class="skill-tag" onclick="inspectSkill('SQL','Data','Extracted and transformed booking records across 4 metro regions to discover channel commission leakages.')" data-cursor="INSPECT">SQL</span>
+                <span class="skill-tag" onclick="inspectSkill('Python','Data','Data cleaning, statistical correlations, and model testing across 10,000+ records and Epsilon 6.0 anime portfolio valuations.')" data-cursor="INSPECT">Python</span>
+                <span class="skill-tag" onclick="inspectSkill('Tableau','Data','Built 20+ interactive drill-down views displaying occupancy floors, lead time vs cancellation patterns, and revenue recovery scenarios.')" data-cursor="INSPECT">Tableau</span>
+                <span class="skill-tag" onclick="inspectSkill('Excel','Data','Financial sensitivity modeling, unit economics analysis, and ₹30L T&P cell annual allocation budget planning.')" data-cursor="INSPECT">Excel</span>
+                <span class="skill-tag" onclick="inspectSkill('Statistical Analysis','Data','Correlation analysis and hypothesis validation on viewer elasticity and hotel booking distributions.')" data-cursor="INSPECT">Statistical Analysis</span>
+                <span class="skill-tag" onclick="inspectSkill('EDA','Data','Exploratory data analysis uncovering hidden occupancy anomalies across weekday versus weekend stays.')" data-cursor="INSPECT">EDA</span>
+              </div>
+            </div>
+
+            <div class="skill-group-box" data-cat="build">
+              <p class="skill-cat-head">Build &amp; Delivery</p>
+              <div class="flex flex-wrap gap-1.5 mt-1">
+                <span class="skill-tag" onclick="inspectSkill('Figma','Build','Designed UI wireframes, diff proposal drawer interfaces, and responsive tri-views (Scan, Text, Split) for OCR Studio.')" data-cursor="INSPECT">Figma</span>
+                <span class="skill-tag" onclick="inspectSkill('GitHub','Build','Maintained open-source repositories (OCR Studio & Journal) with CI/CD deployments directly to Cloudflare Pages.')" data-cursor="INSPECT">GitHub</span>
+                <span class="skill-tag" onclick="inspectSkill('Prompt Engineering','Build','Developed structured prompts and guardrails for optional Gemini-assisted OCR correction proposal mode.')" data-cursor="INSPECT">Prompt Engineering</span>
+                <span class="skill-tag" onclick="inspectSkill('AI-Assisted Development','Build','Leveraged agentic workflows (Google Antigravity, OpenAI Codex) to accelerate MVP prototyping without sacrificing architectural control.')" data-cursor="INSPECT">AI-assisted development (Codex, Antigravity)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Record & Certs -->
+        <div class="p-5 fade-up">
+          <span class="chapter-label">Academic Record</span>
+          <h3 class="article-headline text-[clamp(1rem,2.2vw,1.4rem)] mb-4 leading-tight">Education &amp; Credentials</h3>
+
+          <div class="space-y-3 mb-5">
+            <div class="classifieds-box spotlight-card" data-cursor="EDUCATION">
+              <p class="classifieds-header text-sm">B.Tech &middot; Civil Engineering</p>
+              <p class="article-body text-xs font-bold text-stone-900">Bundelkhand Institute of Engineering &amp; Technology (BIET), Jhansi</p>
+              <p class="article-body text-xs mt-1">Expected 2027 &middot; <strong class="text-amber-800">CGPA 8.7</strong></p>
+              <p class="article-body text-[0.7rem] mt-1 text-stone-600 italic">Extended beyond the classroom through T&amp;P Cell leadership, product development, and national strategy competitions.</p>
+            </div>
+          </div>
+
+          <p class="article-kicker mb-3">Official Gazette &middot; Certifications</p>
+          <div class="space-y-3">
+            <div class="border-l-4 border-black pl-3 py-1 bg-white/40">
+              <p class="article-body text-xs font-bold">Winter Consulting &middot; 2025</p>
+              <p class="article-body text-xs opacity-70">Consulting &amp; Analytics Club &middot; IIT Guwahati</p>
+              <p class="article-body text-[0.7rem] mt-0.5">Structured problem-solving, case breakdown, hypothesis validation.</p>
+            </div>
+            <div class="border-l-4 border-black pl-3 py-1 bg-white/40">
+              <p class="article-body text-xs font-bold">Ignite India &middot; 2026</p>
+              <p class="article-body text-xs opacity-70">Wadhwani Foundation</p>
+              <p class="article-body text-[0.7rem] mt-0.5">Entrepreneurial mindset, customer-centric thinking, professional execution.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /page-skills -->
+
+  <!-- ==================== PAGE 09: OFF THE CLOCK ==================== -->
+  <div id="page-offclock" class="page-section">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-black max-w-4xl mx-auto">
+      <div class="p-6 border-b md:border-b-0 md:border-r border-black fade-up">
+        <span class="chapter-label">08 &middot; Off the Clock</span>
+        <h3 class="article-headline text-[clamp(1.2rem,2.8vw,1.9rem)] mb-2 leading-tight text-effect" data-effect="words">
+          Cricket, Kohli and a Love for the Game
+        </h3>
+        <p class="article-deck text-sm mb-4">
+          Some things don't need to contribute to a résumé. You love them simply because they're a part of you.
+        </p>
+
+        <p class="article-body drop-cap">
+          When the work is done and the laptop finally closes, there is only one place my mind wanders: cricket. It's not a hobby I took up to appear well-rounded, and it isn't something I analyze through a professional lens just to draw parallels. I love it for the pure, unscripted drama of it all.
+        </p>
+        <p class="article-body mt-3">
+          I grew up watching the sport with the kind of obsessive focus only a genuine fan understands — following every ball of a five-day Test match, riding every high and low of a tense run chase, and admiring the sheer mental fortitude it takes to perform under relentless pressure.
+        </p>
+
+        <div class="pull-quote my-4">
+          "I do not turn cricket into a lesson. I just love it. But if watching Kohli has taught me anything, it is this: whatever you choose to do, care deeply about it, give it everything you have, and never get comfortable where you are."
+        </div>
+      </div>
+
+      <div class="p-6 fade-up">
+        <p class="article-kicker mb-3">My Cricket File</p>
+        <div class="weather-box">
+          <div class="weather-row"><span class="weather-key">The Player</span><span class="weather-val">Virat Kohli</span></div>
+          <div class="weather-row"><span class="weather-key">What I Admire Most</span><span class="weather-val">His mentality.</span></div>
+          <div class="weather-row"><span class="weather-key">The Team</span><span class="weather-val">India. Always.</span></div>
+          <div class="weather-row"><span class="weather-key">The Feeling</span><span class="weather-val">That nervous excitement before a big India match.</span></div>
+          <div class="weather-row"><span class="weather-key">The Hope</span><span class="weather-val">Kohli is still there when the chase gets difficult.</span></div>
+          <div class="weather-row"><span class="weather-key">The Problem</span><span class="weather-val">A bad India loss can ruin the mood for longer than I'd like to admit.</span></div>
+          <div class="weather-row"><span class="weather-key">And Yes...</span><span class="weather-val">If Kohli is batting, I'm probably not going anywhere.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Feature Strip on Cricket Page -->
+    <div class="border-t border-black grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-black bg-[#faf8f4] max-w-4xl mx-auto border-x border-b border-black">
+      <div class="p-4">
+        <figure class="border border-black p-1.5 bg-[#eae6df]">
+          <img src="assets/kohli_celebration.jpg" alt="Virat Kohli celebrating with finger pointed to the sky" class="w-full h-56 object-cover border border-black/40 grayscale hover:grayscale-0 transition duration-300">
+          <figcaption class="font-serif italic text-xs text-center mt-2 text-stone-800 leading-snug">
+            &ldquo;If Kohli is still at the crease, the chase is never over.&rdquo; &mdash; MCG, 2022
+          </figcaption>
+        </figure>
+      </div>
+      <div class="p-4">
+        <figure class="border border-black p-1.5 bg-[#eae6df]">
+          <img src="assets/kohli_goat.jpg" alt="Virat Kohli Greatest of All Time Number 18" class="w-full h-56 object-cover border border-black/40 grayscale hover:grayscale-0 transition duration-300">
+          <figcaption class="font-serif italic text-xs text-center mt-2 text-stone-800 leading-snug">
+            &ldquo;Greatest of all time &middot; Number 18 &middot; Uncompromising excellence.&rdquo;
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div><!-- /page-offclock -->
+
+  <!-- ==================== PAGE 09: CONNECT ==================== -->
+  <div id="page-connect" class="page-section">
+    <div class="border border-black max-w-3xl mx-auto p-6 spotlight-card fade-up">
+      <span class="chapter-label">09 &middot; Connect</span>
+      <h3 class="article-headline text-[clamp(1.4rem,3.2vw,2.4rem)] mb-2 leading-tight text-effect" data-effect="words">
+        Got a problem worth solving?<br/>Let's talk.
+      </h3>
+      <p class="article-body mt-3" style="font-size:0.85rem;">
+        I am looking for APM/PM internships, and I enjoy working with people who are building products and thinking carefully about who they are for. If that sounds like you, I would like to hear from you.
+      </p>
+
+      <p class="article-kicker mt-5 mb-3">Contact &amp; Profiles</p>
+      <div class="weather-box mb-5">
+        <div class="contact-link-row" onclick="copyContact('aakash.yadavv23@gmail.com', 'Email copied to clipboard!')" data-cursor="COPY">
+          <span class="contact-key">Email</span>
+          <span class="contact-val"><span>aakash.yadavv23@gmail.com</span> <span class="text-[0.6rem] text-stone-400 font-mono ml-1">&#128203; Click to copy</span></span>
+        </div>
+        <div class="contact-link-row" onclick="copyContact('+917380650624', 'Phone number copied to clipboard!')" data-cursor="COPY">
+          <span class="contact-key">Phone</span>
+          <span class="contact-val"><span>+91 7380650624</span> <span class="text-[0.6rem] text-stone-400 font-mono ml-1">&#128203; Click to copy</span></span>
+        </div>
+        <div class="contact-link-row">
+          <span class="contact-key">R&eacute;sum&eacute;</span>
+          <span class="contact-val"><a href="https://drive.google.com/file/d/1cOty2uFoAYOoE7kN-v8eQ4IIUnPEaQad/view?usp=sharing" target="_blank" rel="noopener" data-cursor="VIEW">View / Download R&eacute;sum&eacute; &rarr;</a></span>
+        </div>
+        <div class="contact-link-row flex gap-4 mt-3 pt-3 border-t border-black/10 items-center justify-start">
+          <a href="https://linkedin.com/in/akash-yadavv" target="_blank" rel="noopener" title="LinkedIn" class="hover:opacity-70 transition-opacity" data-cursor="LINKEDIN">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
+          </a>
+          <a href="https://github.com/akashydv23" target="_blank" rel="noopener" title="GitHub" class="hover:opacity-70 transition-opacity" data-cursor="GITHUB">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          </a>
+          <a href="https://x.com/akashhYaadav" target="_blank" rel="noopener" title="X (Twitter)" class="hover:opacity-70 transition-opacity" data-cursor="TWITTER">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ad-box">
+        <p class="masthead-subtitle font-bold mb-1" style="font-size:0.75rem;">Akash Yadav's Journal &middot; Volume I</p>
+        <p class="article-body text-xs mt-1 italic text-center">Published, designed &amp; continually revised by Akash Yadav.<br/>A journal of problems solved, decisions defended, and products shipped.</p>
+        <p class="masthead-subtitle mt-2 font-bold" style="font-size:0.6rem; opacity:0.8;">Work in Progress. Always.</p>
+      </div>
+    </div>
+  </div><!-- /page-connect -->
+
+</div><!-- /pages-container -->
+</div><!-- /max-w-7xl -->
+
+<!-- Page Dots Indicator -->
+<div class="page-dots" role="navigation" aria-label="Page indicator">
+  <div class="page-dot active-dot" onclick="showPage('page-cover')" title="01 Cover" aria-label="01 Cover"></div>
+  <div class="page-dot" onclick="showPage('page-about')" title="02 Letter" aria-label="02 Letter"></div>
+  <div class="page-dot" onclick="showPage('page-build')" title="03 Build Desk" aria-label="03 Build Desk"></div>
+  <div class="page-dot" onclick="showPage('page-leadership')" title="04 Leadership" aria-label="04 Leadership"></div>
+  <div class="page-dot" onclick="showPage('page-analysis')" title="05 Analysis" aria-label="05 Analysis"></div>
+  <div class="page-dot" onclick="showPage('page-field')" title="06 Field Notes" aria-label="06 Field Notes"></div>
+  <div class="page-dot" onclick="showPage('page-skills')" title="07 Toolkit" aria-label="07 Toolkit"></div>
+  <div class="page-dot" onclick="showPage('page-offclock')" title="08 Off Clock" aria-label="08 Off Clock"></div>
+  <div class="page-dot" onclick="showPage('page-connect')" title="09 Connect" aria-label="09 Connect"></div>
+</div>
+
+<!-- Print Edition Button -->
+<button id="print-btn" onclick="window.print()" aria-label="Print or save as PDF" data-cursor="PRINT">&#128438;&nbsp; Print Edition</button>
+
+<!-- ==============================================
+     SPREAD OVERLAY (DEEP-DIVE MODAL)
+============================================== -->
+<div id="spread-overlay" role="dialog" aria-modal="true">
+  <div id="spread-backdrop"></div>
+  <div id="spread-panel">
+    <div class="spread-drag-handle"></div>
+    <div class="spread-header">
+      <span class="spread-edition-tag" id="spread-edition-tag">Akash Yadav's Journal &middot; Volume I</span>
+      <button class="spread-close" onclick="closeSpread()" aria-label="Close" data-cursor="CLOSE">&times;</button>
+    </div>
+    <div id="spread-content"></div>
+    <div class="spread-footer-strip">
+      <span class="spread-edition-tag">Akash Yadav's Journal &middot; <span id="spread-page-num"></span></span>
+      <div id="spread-related" style="display:flex; gap:0.5rem; flex-wrap:wrap;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================
+     SPREAD TEMPLATES
+============================================== -->
+
+<!-- OCR STUDIO SPREAD -->
+<template id="tpl-ocr">
+<div class="spread-inner">
+  <p class="spread-top-tag">03 &middot; Build Desk &middot; Case Study 01 &middot; Live Product</p>
+  <h2 class="spread-headline">OCR Studio: Reliable OCR for Indian Languages, Without Uploading a Single Document</h2>
+  <p class="spread-deck">A zero-install OCR platform for Indian scripts that runs entirely in your browser.</p>
+  <p class="spread-byline">Product Management &middot; Architecture &amp; System Design &middot; Live Production</p>
+
+  <div class="spread-rule"></div>
+
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Live Link</span><span class="spread-meta-val"><a href="https://ocrstudio.pages.dev" target="_blank" rel="noopener" class="underline">ocrstudio.pages.dev ↗</a></span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Repository</span><span class="spread-meta-val"><a href="https://github.com/akashydv23/OCR" target="_blank" rel="noopener" class="underline">github.com/akashydv23/OCR ↗</a></span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Core Guarantee</span><span class="spread-meta-val">0 Documents Uploaded (Default Mode)</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Validation</span><span class="spread-meta-val">36 Automated Tests</span></div>
+  </div>
+
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">13</span><span class="stat-label">Indian Scripts</span></div>
+    <div class="stat-badge"><span class="stat-num">36</span><span class="stat-label">Automated Tests</span></div>
+    <div class="stat-badge"><span class="stat-num">~3.2s</span><span class="stat-label">On-Device / Page</span></div>
+    <div class="stat-badge"><span class="stat-num">0</span><span class="stat-label">Server Uploads</span></div>
+  </div>
+
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap"><strong>The Problem:</strong> Most OCR tools handle Latin text well and struggle with Indian scripts, where conjunct characters, vowel signs and degraded paper make recognition hard. The tools that do work usually need you to upload documents to a server, which is a real problem for legal records, revenue documents and anything personal. I wanted to see whether both gaps could be closed in one product.</p>
+      
+      <p><strong>Who it is for:</strong> Legal researchers working with court orders and revenue records, archivists digitising old material, and field clerks who only have a phone and patchy internet.</p>
+
+      <div class="spread-pull">"For these users, trust matters as much as accuracy. A tool that is 95% accurate but uploads a land record to someone else's server will not be used for the documents that matter most. So privacy became the product, not a feature."</div>
+
+      <!-- Interactive Feature Engine Preview (In Modal) -->
+      <div class="border border-black bg-stone-50 p-3 my-4 shadow-inner" onclick="event.stopPropagation()">
+        <p class="text-[0.6rem] font-bold font-mono uppercase tracking-wider text-stone-600 mb-2">Interactive Feature Preview</p>
+        <div class="flex gap-1.5 border-b border-stone-300 pb-1.5 mb-2">
+          <button onclick="switchOcrTab('diff')" id="ocr-tab-diff-btn" class="chip-btn text-[0.6rem] font-bold font-mono px-2 py-0.5 border border-black bg-black text-white">Diff Drawer</button>
+          <button onclick="switchOcrTab('privacy')" id="ocr-tab-privacy-btn" class="chip-btn text-[0.6rem] font-bold font-mono px-2 py-0.5 border border-black bg-white text-black">Privacy Guarantee</button>
+          <button onclick="switchOcrTab('export')" id="ocr-tab-export-btn" class="chip-btn text-[0.6rem] font-bold font-mono px-2 py-0.5 border border-black bg-white text-black">Searchable PDF</button>
+        </div>
+        <div id="ocr-tab-diff" class="text-xs font-mono text-stone-800 bg-white p-2.5 border border-stone-200">
+          <span class="text-[0.55rem] font-bold text-amber-700 uppercase block mb-1">PROPOSAL ENGINE &middot; DIFF REVIEW</span>
+          Original: <span class="bg-red-100 text-red-800 px-1">न्यायालय आदेश</span> &rarr; Proposal: <span class="bg-emerald-100 text-emerald-800 font-bold px-1">&plus; न्यायालय आदेश पत्र (Accept / Revert)</span>
+        </div>
+        <div id="ocr-tab-privacy" class="hidden text-xs font-mono text-stone-800 bg-white p-2.5 border border-stone-200">
+          <span class="text-[0.55rem] font-bold text-emerald-700 uppercase block mb-1">LOCAL WASM RUNTIME GUARANTEE</span>
+          Client-side execution only. Network tab reveals 0 outbound telemetry or file transfer requests during recognition.
+        </div>
+        <div id="ocr-tab-export" class="hidden text-xs font-mono text-stone-800 bg-white p-2.5 border border-stone-200">
+          <span class="text-[0.55rem] font-bold text-blue-700 uppercase block mb-1">MULTI-FORMAT EXPORT PIPELINE</span>
+          Exact bounding box coordinates mapped directly behind document layer for native text selection in Adobe / Mac Preview.
+        </div>
+      </div>
+
+      <p><strong>The Decisions I Made:</strong></p>
+      <ul class="step-list">
+        <li><span class="step-num">&bull;</span><span><strong>Everything runs in the browser by default:</strong> No backend, no install, and documents never leave the device in default mode. I accepted slower processing than a cloud API in exchange for that guarantee.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>AI mode is optional and user-controlled:</strong> Users who want more speed can add their own Gemini key. It is off by default and never runs without their action.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>Corrections are proposals, never silent edits:</strong> The original recognised text is never changed. Every suggested fix appears as a diff the user can accept or reverse exactly.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>Works offline and on phones:</strong> A progressive web app with mobile-first views (Scan, Text, Split), because field users do not sit at desktops.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>Exports people can actually use:</strong> Searchable PDF, Word, plain text and JSON.</span></li>
+      </ul>
+
+      <p><strong>Impact:</strong></p>
+      <p>Live and usable today, with the code public and open source. Validated with a 36-test automated suite covering correction, preprocessing and export logic. About 3.2 seconds per page on-device for Hindi and English.</p>
+
+      <p><strong>What I Learned:</strong></p>
+      <p>The hardest product question was not "how accurate can it be?" but "what should it refuse to do?" Letting the tool correct text automatically would have looked smarter. Keeping every change reviewable made it trustworthy, and for this audience that mattered more.</p>
+
+      <p><strong>What I Would Build Next:</strong> Accuracy benchmarks on real regional-language documents and direct dictionary integration for low-resource scripts.</p>
+    </div>
+
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">Product Pillars</p>
+      <ul class="step-list">
+        <li><span class="step-num">01 &middot;</span><span>Client-Side Tesseract WASM runtime</span></li>
+        <li><span class="step-num">02 &middot;</span><span>Diff proposal drawer for transparent review</span></li>
+        <li><span class="step-num">03 &middot;</span><span>Mobile-responsive PWA (Scan, Text, Split)</span></li>
+        <li><span class="step-num">04 &middot;</span><span>Searchable PDF with text coordinate overlays</span></li>
+      </ul>
+
+      <p class="spread-kicker-section">Supported Indian Scripts</p>
+      <div class="flex flex-wrap gap-1 mt-1">
+        <span class="spread-tag">Devanagari (Hindi, Marathi)</span>
+        <span class="spread-tag">Bengali</span>
+        <span class="spread-tag">Gujarati</span>
+        <span class="spread-tag">Gurmukhi (Punjabi)</span>
+        <span class="spread-tag">Tamil</span>
+        <span class="spread-tag">Telugu</span>
+        <span class="spread-tag">Kannada</span>
+        <span class="spread-tag">Malayalam</span>
+        <span class="spread-tag">Odia</span>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-black">
+        <a href="https://ocrstudio.pages.dev" target="_blank" rel="noopener" class="cta-btn-primary w-full text-center block">Launch OCR Studio ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- POST SNAP SPREAD -->
+<template id="tpl-postsnap">
+<div class="spread-inner">
+  <p class="spread-top-tag">03 &middot; Build Desk &middot; Case Study 02 &middot; Live Product</p>
+  <h2 class="spread-headline">Post Snap: Turning an X Post into a Clean Image, Honestly</h2>
+  <p class="spread-deck">Paste a post link, get a clean PNG. If it is a recreation, it says so.</p>
+  <p class="spread-byline">PRD Specification &middot; Product Strategy &middot; Visual Fidelity Engineering</p>
+
+  <div class="spread-rule"></div>
+
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Live Link</span><span class="spread-meta-val"><a href="https://postxsnap.pages.dev" target="_blank" rel="noopener" class="underline">postxsnap.pages.dev ↗</a></span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Performance</span><span class="spread-meta-val">Median under 5s</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Conversion</span><span class="spread-meta-val">90%+ Conversion Success</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Fidelity</span><span class="spread-meta-val">95%+ Visual Fidelity Pass</span></div>
+  </div>
+
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">90%+</span><span class="stat-label">Conversion Pass</span></div>
+    <div class="stat-badge"><span class="stat-num">&lt;5s</span><span class="stat-label">Generation Time</span></div>
+    <div class="stat-badge"><span class="stat-num">95%+</span><span class="stat-label">Fidelity Score</span></div>
+    <div class="stat-badge"><span class="stat-num">0</span><span class="stat-label">Logins Required</span></div>
+  </div>
+
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap"><strong>The Problem:</strong> People save and share posts as screenshots, but manual screenshots bring interface clutter, cut off long posts, and leave out context.</p>
+
+      <div class="spread-pull">"A converter that quietly rebuilds a post is a trust problem. If someone shares the image, the viewer assumes it is an original capture. The product had to be honest about what it produced."</div>
+
+      <!-- Interactive Disclosure Switcher (In Modal) -->
+      <div class="border border-black bg-stone-50 p-3 my-4 shadow-inner" onclick="event.stopPropagation()">
+        <p class="text-[0.6rem] font-bold font-mono uppercase tracking-wider text-stone-600 mb-2">Interactive Disclosure Verification</p>
+        <div class="flex gap-1.5 border-b border-stone-300 pb-1.5 mb-2">
+          <button onclick="switchSnapMode('captured')" id="snap-tab-captured-btn" class="chip-btn text-[0.6rem] font-bold font-mono px-2 py-0.5 border border-black bg-black text-white">Mode: Captured from X</button>
+          <button onclick="switchSnapMode('recreated')" id="snap-tab-recreated-btn" class="chip-btn text-[0.6rem] font-bold font-mono px-2 py-0.5 border border-black bg-white text-black">Mode: Recreated (Labelled)</button>
+        </div>
+        <div id="snap-preview-captured" class="text-xs font-mono text-stone-800 bg-white p-2.5 border border-stone-200">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-[0.55rem] font-bold text-emerald-800">PIXEL-PERFECT OFFICIAL RENDER</span>
+            <span class="border border-stone-300 bg-stone-100 text-[0.5rem] px-1">Captured from X</span>
+          </div>
+          <p class="text-[0.68rem] text-stone-600">Pixel-accurate capture preserved directly from X's official embed DOM engine.</p>
+        </div>
+        <div id="snap-preview-recreated" class="hidden text-xs font-mono text-stone-800 bg-white p-2.5 border border-stone-200">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-[0.55rem] font-bold text-amber-800">DISCLOSURE BUILT-INTO OUTPUT</span>
+            <span class="border border-amber-600 bg-amber-50 text-amber-900 text-[0.5rem] px-1 font-bold">Recreated from available data</span>
+          </div>
+          <p class="text-[0.68rem] text-stone-600">Never misleads viewers. Missing metrics are left out rather than invented as zeros.</p>
+        </div>
+      </div>
+
+      <p><strong>The Decisions I Made:</strong></p>
+      <ul class="step-list">
+        <li><span class="step-num">&bull;</span><span><strong>Capture first, recreate second:</strong> The tool tries to capture the post as X officially renders it. Only if that fails does it rebuild the post from permitted data.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>Disclosure is built into the output:</strong> A recreation is labelled in the preview and on the downloaded image, so it cannot be mistaken for an original.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>It never invents content:</strong> Missing fields are left out or marked unavailable. A missing metric is never shown as zero.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>Tight scope on purpose:</strong> One X post link, PNG output, no mandatory sign-in. Video, polls, threads and multiple images were deliberately left out of the MVP to ship fast with high reliability.</span></li>
+        <li><span class="step-num">&bull;</span><span><strong>PRD-driven build:</strong> I wrote the PRD before building, with acceptance criteria, success metrics and a phased rollout that began with technical feasibility checks.</span></li>
+      </ul>
+
+      <p><strong>Impact:</strong></p>
+      <p>Live, and tested against the targets I set in the PRD: 90%+ conversion success, median generation under 5 seconds, and a 95%+ visual fidelity pass rate across diverse post formats.</p>
+
+      <p><strong>What I Learned:</strong></p>
+      <p>Writing the spec first made the hard calls visible early: what counts as success, what the tool must refuse to do, and how honest the output has to be. Having acceptance criteria also meant I could tell whether it actually worked.</p>
+    </div>
+
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">Tech Stack</p>
+      <div class="flex flex-wrap gap-1 mt-1">
+        <span class="spread-tag">Next.js / React</span>
+        <span class="spread-tag">Tailwind CSS</span>
+        <span class="spread-tag">HTML5 Canvas API</span>
+        <span class="spread-tag">Cloudflare Workers / Puppeteer</span>
+      </div>
+
+      <p class="spread-kicker-section">Honesty Rules</p>
+      <ul class="step-list">
+        <li><span class="step-num">01 &middot;</span><span>Clear watermark: "Captured from X" vs "Recreated"</span></li>
+        <li><span class="step-num">02 &middot;</span><span>Zero fabricated vanity metrics</span></li>
+        <li><span class="step-num">03 &middot;</span><span>Preserve verified badges only when verifiable</span></li>
+      </ul>
+
+      <div class="mt-4 pt-3 border-t border-black">
+        <a href="https://postxsnap.pages.dev" target="_blank" rel="noopener" class="cta-btn-primary w-full text-center block">Try Post Snap ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- T&P SPREAD -->
+<template id="tpl-tp">
+<div class="spread-inner">
+  <p class="spread-top-tag">04 &middot; Leadership Notes &middot; Training &amp; Placement Cell &middot; BIET Jhansi</p>
+  <h2 class="spread-headline">From Coordinator to Secretary: Fixing a Broken Recruiter Pipeline</h2>
+  <p class="spread-deck">13 of 25+ recruiters who had paused hiring came back — and BIET executed its first multi-college Pool Campus Drive.</p>
+  <p class="spread-byline">Leadership &middot; Stakeholder Management &middot; Marketplace Operations &middot; Sept 2024 &ndash; Present</p>
+
+  <div class="spread-rule"></div>
+
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Recruiters Revived</span><span class="spread-meta-val">13 of 25+ Paused</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">New Onboardings</span><span class="spread-meta-val">15+ New Recruiters</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Regional Outreach</span><span class="spread-meta-val">4 Regional Colleges</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Team Led</span><span class="spread-meta-val">60+ Coordinators</span></div>
+  </div>
+
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">13/25+</span><span class="stat-label">Revived</span></div>
+    <div class="stat-badge"><span class="stat-num">15+</span><span class="stat-label">New Recruiters</span></div>
+    <div class="stat-badge"><span class="stat-num">60+</span><span class="stat-label">Team Led</span></div>
+    <div class="stat-badge"><span class="stat-num">1,200+</span><span class="stat-label">Students</span></div>
+  </div>
+
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap"><strong>The Progression:</strong> Coordinator &rarr; Deputy Secretary &rarr; Secretary, from September 2024. Each step meant owning more of the outcome and less of the task list.</p>
+
+      <p><strong>The Problem:</strong> More than 25 recruiters who used to hire from BIET had stopped. When I asked why, the reasons were poor past experiences and follow-ups that came too late. The issue was not that recruiters did not want our students. We had made working with us frustrating.</p>
+
+      <p><strong>What I Changed:</strong> I redesigned outreach across 1,000+ recruiters: segmenting them by sector, giving each coordinator clear ownership, and tracking follow-ups on a schedule so nobody waited on us.</p>
+
+      <div class="spread-pull">"Placement is a two-sided marketplace, and it only works when both sides trust it."</div>
+
+      <p><strong>The Result:</strong> 13 of 25+ paused recruiters returned, 15+ new recruiters came on board, and students saw more and better offers.</p>
+
+      <p><strong>The Pool Campus Drive:</strong> BIET's first Pool Campus Drive brought four colleges and recruiters together and led to 59 selections, 28 of them from BIET. It was formulated to aggregate talent pool density and attract Tier-1 recruiters who previously bypassed individual regional colleges.</p>
+
+      <p><strong>What I Learned:</strong> As responsibility grew, the work shifted from doing tasks to making sure people, communication and process moved together.</p>
+    </div>
+
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">Core Interventions</p>
+      <ul class="step-list">
+        <li><span class="step-num">01 &middot;</span><span>Root-cause interviews with churned HR teams</span></li>
+        <li><span class="step-num">02 &middot;</span><span>Sector-specific coordinator pods</span></li>
+        <li><span class="step-num">03 &middot;</span><span>Strict 24-hour SLA on recruiter follow-ups</span></li>
+        <li><span class="step-num">04 &middot;</span><span>Cross-college talent pooling</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- HOSPITALITY SPREAD -->
+<template id="tpl-hosp">
+<div class="spread-inner">
+  <p class="spread-top-tag">05 &middot; Analysis Desk &middot; Case Study 03 &middot; Business Analytics</p>
+  <h2 class="spread-headline">Where Does the Revenue Go?</h2>
+  <p class="spread-deck">Optimizing Revenue Leakage &amp; Profitability in the Hospitality Sector across 10,000+ booking records.</p>
+  <p class="spread-byline">Approach: Business Analysis &middot; Secondary Research &middot; Tableau &middot; Excel</p>
+
+  <div class="spread-rule"></div>
+
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Live Link</span><span class="spread-meta-val"><a href="https://hospitality-revenue.pages.dev" target="_blank" rel="noopener" class="underline">hospitality-revenue.pages.dev ↗</a></span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Dataset</span><span class="spread-meta-val">10,000+ Bookings</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Geography</span><span class="spread-meta-val">Delhi, Mumbai, Hyderabad, Bangalore</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Projected Uplift</span><span class="spread-meta-val">&#8377;10.88 L Incremental Revenue</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Projected ROI</span><span class="spread-meta-val">62.3% ROI</span></div>
+  </div>
+
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">10K+</span><span class="stat-label">Bookings</span></div>
+    <div class="stat-badge"><span class="stat-num">4</span><span class="stat-label">Metro Cities</span></div>
+    <div class="stat-badge"><span class="stat-num">&#8377;10.88L</span><span class="stat-label">Revenue Lift</span></div>
+    <div class="stat-badge"><span class="stat-num">62.3%</span><span class="stat-label">Projected ROI</span></div>
+  </div>
+
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap">I analysed 10,000+ bookings across Delhi, Mumbai, Hyderabad and Bangalore to find where hotels were losing revenue: through pricing gaps, cancellations and underused capacity. Finding the pattern was half the work. The other half was deciding what to do about it, so I built segment-specific pricing and bundling recommendations and modelled the scenarios, projecting &#8377;10.88 L of additional revenue at 62.3% ROI.</p>
+
+      <div class="spread-pull">"Data does not dictate decisions — it reveals the levers. The outcome depends on selecting the levers with highest strategic leverage."</div>
+
+      <p>By connecting platform commission structures with lead-time booking patterns, the dashboard identified that direct corporate bundling and dynamic weekend surcharge floors yielded the highest margin retention across Tier-1 business properties.</p>
+    </div>
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">Visual Dashboards</p>
+      <img src="assets/hosp_dash.jpg" alt="Tableau Dashboard" class="spread-img" />
+      <p class="spread-img-caption">Booking patterns &amp; channel revenue leakage</p>
+      <div class="mt-4 pt-3 border-t border-black">
+        <a href="https://hospitality-revenue.pages.dev" target="_blank" rel="noopener" class="cta-btn-primary w-full text-center block">View Live Project ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- EPSILON SPREAD -->
+<template id="tpl-eps">
+<div class="spread-inner">
+  <p class="spread-top-tag">05 &middot; Analysis Desk &middot; Case Study 04 &middot; National Strategy</p>
+  <h2 class="spread-headline">Strategy Under Constraints</h2>
+  <p class="spread-deck">Epsilon 6.0 &middot; SSCBS, University of Delhi &middot; National Top 20 Finish among 250+ teams.</p>
+  <p class="spread-byline">Focus: Strategy &middot; Decision Matrix &middot; Capital Allocation</p>
+
+  <div class="spread-rule"></div>
+
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Competition</span><span class="spread-meta-val">Epsilon 6.0 &middot; SSCBS</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Finish</span><span class="spread-meta-val">National Top 20</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Budget A</span><span class="spread-meta-val">&#8377;700 Crore</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Budget B</span><span class="spread-meta-val">&#8377;1,000 Crore</span></div>
+  </div>
+
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap">We had to decide how two streaming platforms should spend fixed budgets on content. The hard part was not picking the best titles. It was choosing the best combination under a budget, weighing viewership, revenue potential, ratings, exclusivity and reach. That is a prioritisation problem, and it is the part of the work I enjoy most.</p>
+
+      <div class="spread-pull">"A good title is not necessarily the right decision. When budget is hard-capped, trade-offs must align strictly with platform positioning."</div>
+
+      <p>Using a multi-criteria decision matrix with viewership retention weighting and ROI elasticity under strict budget caps, our team formulated differentiated acquisition portfolios for niche exclusivity versus mass acquisition regimes.</p>
+    </div>
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">Event Record</p>
+      <img src="assets/epsilon_cover.jpg" alt="Epsilon 6.0" class="spread-img" />
+      <p class="spread-img-caption">Epsilon 6.0 Strategy War Games &middot; SSCBS, Delhi</p>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- L&T SPREAD -->
+<template id="tpl-lt">
+<div class="spread-inner">
+  <p class="spread-top-tag">06 &middot; Field Notes &middot; Larsen &amp; Toubro &middot; Summer 2025</p>
+  <h2 class="spread-headline">Inside a &#8377;65,000 Cr Water Infrastructure Project</h2>
+  <p class="spread-deck">Narmada&ndash;Kshipra Link Project &middot; Data, operations and large-scale delivery.</p>
+  <p class="spread-byline">Summer Internship &middot; Larsen &amp; Toubro &middot; June&ndash;July 2025 &middot; Indore, Madhya Pradesh</p>
+
+  <div class="spread-rule"></div>
+
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Scale</span><span class="spread-meta-val">&#8377;65,000 Crore</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Impact Area</span><span class="spread-meta-val">163 Villages &middot; ~30,000 Hectares</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Key Nodes</span><span class="spread-meta-val">6 Break Pressure Tanks</span></div>
+  </div>
+
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap">During my summer at Larsen &amp; Toubro, I studied the execution framework of the Narmada–Kshipra Link Project and how SCADA systems monitor pumps, power use and water flow across its break pressure tanks. It was my first close look at how data, operations and large-scale delivery fit together.</p>
+
+      <div class="spread-pull">"Engineering at this scale taught me that edge cases in physical systems behave just like edge cases in software: unnoticed anomalies cascade quickly unless monitored at telemetry nodes."</div>
+
+      <p>I evaluated SCADA telemetry streams across 6 Break Pressure Tanks, mapping pressure drop patterns across high-demand pumping hours and recommending pre-emptive pressure surge logging.</p>
+    </div>
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">Telemetry Node</p>
+      <img src="assets/lt_scada.jpg" alt="SCADA telemetry" class="spread-img" />
+      <p class="spread-img-caption">Telemetry &amp; pump control interface</p>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- ==============================================
+     SCRIPTS & ADVANCED MOTION INTERACTIONS
+============================================== -->
+<script>
+  // ==============================================
+  // 1. DYNAMIC WATERMELON / MOTION CURSOR ENGINE
+  // ==============================================
+  (function initCursor() {
+    var dot = document.getElementById('cursor-dot');
+    var ring = document.getElementById('cursor-ring');
+    var label = document.getElementById('cursor-label');
+    if (!dot || !ring) return;
+
+    var mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+    var ringX = mouseX, ringY = mouseY;
+    var isMoving = false;
+
+    window.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.transform = 'translate(' + mouseX + 'px, ' + mouseY + 'px) translate(-50%, -50%)';
+      label.style.transform = 'translate(' + (mouseX + 16) + 'px, ' + (mouseY + 16) + 'px)';
+      isMoving = true;
+    });
+
+    // Smooth lerp loop for the follower ring
+    function renderCursor() {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      ring.style.transform = 'translate(' + ringX + 'px, ' + ringY + 'px) translate(-50%, -50%)';
+      requestAnimationFrame(renderCursor);
+    }
+    requestAnimationFrame(renderCursor);
+
+    // Interactive element detection for cursor changes
+    document.addEventListener('mouseover', function(e) {
+      var target = e.target.closest('[data-cursor], a, button, .story-card, .toc-card, .skill-tag, .chip-btn');
+      if (target) {
+        document.body.classList.add('cursor-hover');
+        var customLabel = target.getAttribute('data-cursor');
+        if (customLabel) {
+          label.textContent = customLabel;
+          document.body.classList.add('cursor-has-label');
+        } else {
+          document.body.classList.remove('cursor-has-label');
+        }
+      } else {
+        document.body.classList.remove('cursor-hover');
+        document.body.classList.remove('cursor-has-label');
+      }
+    });
+
+    document.addEventListener('mouseleave', function() {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+      label.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', function() {
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
+    });
+  })();
+
+  // ==============================================
+  // 2. MOTION-PRIMITIVES TEXT-EFFECT REVEAL ENGINE
+  // ==============================================
+  function applyTextEffect(container) {
+    if (!container) return;
+    var elements = container.querySelectorAll('.text-effect:not(.effect-processed)');
+    elements.forEach(function(el) {
+      el.classList.add('effect-processed');
+      var effectType = el.getAttribute('data-effect') || 'words';
+      var rawText = el.textContent.trim();
+      el.innerHTML = '';
+
+      if (effectType === 'chars') {
+        var chars = rawText.split('');
+        chars.forEach(function(char, idx) {
+          var span = document.createElement('span');
+          span.className = 'text-effect-word';
+          span.textContent = char === ' ' ? '\u00A0' : char;
+          span.style.transitionDelay = (idx * 28) + 'ms';
+          el.appendChild(span);
+          setTimeout(function() { span.classList.add('revealed'); }, 40);
+        });
+      } else {
+        // Words effect
+        var words = rawText.split(' ');
+        words.forEach(function(word, idx) {
+          var span = document.createElement('span');
+          span.className = 'text-effect-word';
+          span.textContent = word + (idx < words.length - 1 ? ' ' : '');
+          span.style.transitionDelay = (idx * 40) + 'ms';
+          el.appendChild(span);
+          setTimeout(function() { span.classList.add('revealed'); }, 50);
+        });
+      }
+    });
+  }
+
+  // ==============================================
+  // 3. TEXT SCRAMBLE / DECODER EFFECT
+  // ==============================================
+  var scrambleChars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789!@#$%&*';
+  function scrambleText(element, finalString, duration) {
+    var length = finalString.length;
+    var startTime = Date.now();
+    var origClass = element.className;
+    element.classList.add('scramble-active');
+
+    var timer = setInterval(function() {
+      var progress = Math.min((Date.now() - startTime) / (duration || 450), 1);
+      var revealedCount = Math.floor(progress * length);
+      var output = '';
+
+      for (var i = 0; i < length; i++) {
+        if (i < revealedCount) {
+          output += finalString[i];
+        } else {
+          output += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+        }
+      }
+      element.textContent = output;
+
+      if (progress >= 1) {
+        clearInterval(timer);
+        element.textContent = finalString;
+        element.classList.remove('scramble-active');
+      }
+    }, 30);
+  }
+
+  document.querySelectorAll('.scramble-hover').forEach(function(el) {
+    el.addEventListener('mouseenter', function() {
+      var targetText = el.getAttribute('data-scramble') || el.textContent;
+      scrambleText(el, targetText, 400);
+    });
+  });
+
+  // ==============================================
+  // 4. ANIMATED METRIC COUNTERS (SLIDING NUMBERS)
+  // ==============================================
+  function animateNumbers(container) {
+    if (!container) return;
+    var badges = container.querySelectorAll('.stat-num[data-val]:not(.counter-done)');
+    badges.forEach(function(badge) {
+      badge.classList.add('counter-done');
+      var target = parseFloat(badge.getAttribute('data-val'));
+      var prefix = badge.getAttribute('data-prefix') || '';
+      var suffix = badge.getAttribute('data-suffix') || '';
+      var isFloat = target % 1 !== 0;
+      var duration = 900;
+      var start = 0;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // Easing: easeOutExpo
+        var ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        var current = start + (target - start) * ease;
+        badge.textContent = prefix + (isFloat ? current.toFixed(1) : Math.floor(current)) + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          badge.textContent = prefix + target + suffix;
+        }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  // ==============================================
+  // 5. WATERMELON CARD SPOTLIGHT & 3D TILT EFFECT
+  // ==============================================
+  document.querySelectorAll('.spotlight-card').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', x + 'px');
+      card.style.setProperty('--mouse-y', y + 'px');
+
+      // Subtle 3D Tilt calculation
+      var cx = rect.width / 2;
+      var cy = rect.height / 2;
+      var dx = (x - cx) / cx;
+      var dy = (y - cy) / cy;
+      card.style.transform = 'perspective(900px) rotateY(' + (dx * 2.5) + 'deg) rotateX(' + (-dy * 2.5) + 'deg) translateY(-2px)';
+    });
+
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0px)';
+    });
+  });
+
+  // ==============================================
+  // 6. INTERACTIVE BUILD DESK TABS
+  // ==============================================
+  window.switchOcrTab = function(tabName) {
+    ['diff','privacy','export'].forEach(function(t) {
+      var el = document.getElementById('ocr-tab-' + t);
+      var btn = document.getElementById('ocr-tab-' + t + '-btn');
+      if (el && btn) {
+        if (t === tabName) {
+          el.classList.remove('hidden');
+          btn.classList.add('bg-black', 'text-white');
+          btn.classList.remove('bg-white', 'text-black');
+        } else {
+          el.classList.add('hidden');
+          btn.classList.remove('bg-black', 'text-white');
+          btn.classList.add('bg-white', 'text-black');
+        }
+      }
+    });
+  };
+
+  window.switchSnapMode = function(modeName) {
+    var cPreview = document.getElementById('snap-preview-captured');
+    var rPreview = document.getElementById('snap-preview-recreated');
+    var cBtn = document.getElementById('snap-tab-captured-btn');
+    var rBtn = document.getElementById('snap-tab-recreated-btn');
+
+    if (modeName === 'captured') {
+      cPreview.classList.remove('hidden');
+      rPreview.classList.add('hidden');
+      cBtn.classList.add('bg-black', 'text-white');
+      cBtn.classList.remove('bg-white', 'text-black');
+      rBtn.classList.remove('bg-black', 'text-white');
+      rBtn.classList.add('bg-white', 'text-black');
+    } else {
+      cPreview.classList.add('hidden');
+      rPreview.classList.remove('hidden');
+      rBtn.classList.add('bg-black', 'text-white');
+      rBtn.classList.remove('bg-white', 'text-black');
+      cBtn.classList.remove('bg-black', 'text-white');
+      cBtn.classList.add('bg-white', 'text-black');
+    }
+  };
+
+  // ==============================================
+  // 7. TOOLKIT FILTERING & FLOATING INSPECTOR
+  // ==============================================
+  window.filterSkills = function(category) {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active-filter'); });
+    var activeBtn = document.getElementById('filter-' + category + '-btn');
+    if (activeBtn) activeBtn.classList.add('active-filter');
+
+    document.querySelectorAll('.skill-group-box').forEach(function(box) {
+      if (category === 'all' || box.getAttribute('data-cat') === category) {
+        box.style.display = 'block';
+      } else {
+        box.style.display = 'none';
+      }
+    });
+  };
+
+  window.inspectSkill = function(title, cat, desc) {
+    var insp = document.getElementById('skill-inspector');
+    document.getElementById('inspector-title').textContent = title;
+    document.getElementById('inspector-cat').textContent = cat.toUpperCase() + ' SKILL BRIEF';
+    document.getElementById('inspector-desc').textContent = desc;
+    insp.classList.add('active');
+
+    // Auto dismiss after 7 seconds if unclicked
+    clearTimeout(window._inspTimer);
+    window._inspTimer = setTimeout(closeInspector, 7000);
+  };
+
+  window.closeInspector = function() {
+    var insp = document.getElementById('skill-inspector');
+    if (insp) insp.classList.remove('active');
+  };
+
+  // ==============================================
+  // 8. 1-CLICK CLIPBOARD COPY TOAST
+  // ==============================================
+  window.copyContact = function(text, label) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(showToast);
+    } else {
+      showToast();
+    }
+    function showToast() {
+      var toast = document.getElementById('copy-toast');
+      toast.textContent = label || 'Copied to clipboard 🗞️';
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2200);
+    }
+  };
+
+  // ==============================================
+  // 9. PROGRESS BAR & MULTI-PAGE NAVIGATION
+  // ==============================================
+  var progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }, { passive: true });
+
+  var pageIds = [
+    'page-cover',
+    'page-about',
+    'page-build',
+    'page-leadership',
+    'page-analysis',
+    'page-field',
+    'page-skills',
+    'page-offclock',
+    'page-connect'
+  ];
+  var currentPage = 'page-cover';
+
+  window.showPage = function(pageId) {
+    if (pageId === currentPage) return;
+    var outgoing = document.getElementById(currentPage);
+    if (outgoing) {
+      outgoing.classList.remove('visible');
+      setTimeout(function() {
+        outgoing.classList.remove('active');
+        activatePage(pageId);
+      }, 280);
+    } else {
+      activatePage(pageId);
+    }
+    currentPage = pageId;
+
+    document.querySelectorAll('.chapter-nav-btn').forEach(function(btn) {
+      btn.classList.toggle('active-nav', btn.dataset.page === pageId);
+    });
+
+    var idx = pageIds.indexOf(pageId);
+    document.querySelectorAll('.page-dot').forEach(function(dot, i) {
+      dot.classList.toggle('active-dot', i === idx);
+    });
+  };
+
+  function activatePage(pageId) {
+    var page = document.getElementById(pageId);
+    if (!page) return;
+    page.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setTimeout(function() {
+      page.classList.add('visible');
+      applyTextEffect(page);
+      animateNumbers(page);
+    }, 40);
+  }
+
+  // Initial load
+  window.addEventListener('load', function() {
+    var first = document.getElementById('page-cover');
+    if (first) {
+      first.classList.add('active');
+      setTimeout(function() {
+        first.classList.add('visible');
+        applyTextEffect(first);
+        animateNumbers(first);
+      }, 70);
+    }
+  });
+
+  // Duplicate ticker track for endless loop
+  (function() {
+    var t = document.getElementById('ticker-track');
+    if (t) t.innerHTML = t.innerHTML + t.innerHTML;
+  })();
+
+  // ==============================================
+  // 10. SPREAD OVERLAY CONFIG (DEEP DIVE MODAL)
+  // ==============================================
+  var spreadConfig = {
+    'ocr':      { tag: "Akash Yadav's Journal · 03 · Build Desk", page: "Case Study 01 — OCR Studio", related: [['postsnap','Post Snap'],['tp','Leadership Notes'],['hosp','Hospitality']] },
+    'postsnap': { tag: "Akash Yadav's Journal · 03 · Build Desk", page: "Case Study 02 — Post Snap", related: [['ocr','OCR Studio'],['tp','Leadership Notes'],['eps','Epsilon 6.0']] },
+    'tp':       { tag: "Akash Yadav's Journal · 04 · Leadership Notes", page: "Leadership Notes — T&P Cell", related: [['ocr','OCR Studio'],['hosp','Hospitality'],['eps','Epsilon 6.0']] },
+    'hosp':     { tag: "Akash Yadav's Journal · 05 · Analysis Desk", page: "Case Study 03 — Hospitality", related: [['eps','Epsilon 6.0'],['ocr','OCR Studio'],['tp','Leadership Notes']] },
+    'eps':      { tag: "Akash Yadav's Journal · 05 · Analysis Desk", page: "Case Study 04 — Epsilon 6.0", related: [['hosp','Hospitality'],['postsnap','Post Snap'],['tp','Leadership Notes']] },
+    'lt':       { tag: "Akash Yadav's Journal · 06 · Field Notes", page: "Field Notes — L&T", related: [['tp','Leadership Notes'],['ocr','OCR Studio'],['hosp','Hospitality']] },
+  };
+  var currentSpread = null;
+
+  window.openSpread = function(id) {
+    var tpl = document.getElementById('tpl-' + id);
+    if (!tpl) return;
+    var cfg = spreadConfig[id] || {};
+    document.getElementById('spread-content').innerHTML = tpl.innerHTML;
+    document.getElementById('spread-content').scrollTop = 0;
+    document.getElementById('spread-edition-tag').innerHTML = cfg.tag || "Akash Yadav's Journal";
+    document.getElementById('spread-page-num').textContent = cfg.page || '';
+    var rel = document.getElementById('spread-related');
+    rel.innerHTML = '';
+    (cfg.related || []).forEach(function(r) {
+      var btn = document.createElement('button');
+      btn.className = 'spread-related-btn';
+      btn.textContent = r[1];
+      btn.onclick = function(e) { e.stopPropagation(); switchSpread(r[0]); };
+      rel.appendChild(btn);
+    });
+    currentSpread = id;
+    document.getElementById('spread-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.switchSpread = function(id) {
+    var tpl = document.getElementById('tpl-' + id);
+    if (!tpl) return;
+    var cfg = spreadConfig[id] || {};
+    var content = document.getElementById('spread-content');
+    content.style.opacity = '0';
+    content.style.transition = 'opacity 0.18s ease';
+    setTimeout(function() {
+      content.innerHTML = tpl.innerHTML;
+      content.scrollTop = 0;
+      content.style.opacity = '1';
+      document.getElementById('spread-edition-tag').innerHTML = cfg.tag || "Akash Yadav's Journal";
+      document.getElementById('spread-page-num').textContent = cfg.page || '';
+      var rel = document.getElementById('spread-related');
+      rel.innerHTML = '';
+      (cfg.related || []).forEach(function(r) {
+        var btn = document.createElement('button');
+        btn.className = 'spread-related-btn';
+        btn.textContent = r[1];
+        btn.onclick = function(e) { e.stopPropagation(); switchSpread(r[0]); };
+        rel.appendChild(btn);
+      });
+      currentSpread = id;
+    }, 180);
+  };
+
+  window.closeSpread = function() {
+    document.getElementById('spread-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(function() { document.getElementById('spread-content').innerHTML = ''; }, 460);
+    currentSpread = null;
+  };
+
+  document.getElementById('spread-backdrop').addEventListener('click', closeSpread);
+  document.getElementById('spread-panel').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && currentSpread) closeSpread(); });
+</script>
+
+</body>
+</html>
