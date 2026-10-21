@@ -145,9 +145,32 @@
     @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     /* ===== CHAPTER NAV ===== */
-    #chapter-nav { position: sticky; top: 0; z-index: 999; background: #f4f1ea; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; backdrop-filter: blur(8px); }
-    .chapter-nav-inner { display: flex; justify-content: center; flex-wrap: wrap; max-width: 1320px; margin: 0 auto; position: relative; }
-    .chapter-nav-btn { display: flex; align-items: center; gap: 5px; padding: 7px 11px; border: none; border-right: 1px solid rgba(0,0,0,0.15); background: transparent; cursor: pointer; color: #1a1a1a; transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); white-space: nowrap; position: relative; }
+    #chapter-nav {
+      position: sticky; top: 0; z-index: 999;
+      background: #f4f1ea; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a;
+      backdrop-filter: blur(8px);
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    #chapter-nav::-webkit-scrollbar { display: none; }
+    .chapter-nav-inner {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      min-width: 100%;
+      width: max-content;
+      margin: 0;
+      padding: 0 0.4rem;
+    }
+    .chapter-nav-btn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 8px 12px; border: none; border-right: 1px solid rgba(0,0,0,0.15);
+      background: transparent; cursor: pointer; color: #1a1a1a;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      white-space: nowrap; flex-shrink: 0; position: relative;
+    }
     .chapter-nav-btn:first-child { border-left: 1px solid rgba(0,0,0,0.15); }
     .chapter-num-badge { font-family: 'Merriweather', serif; font-size: 0.48rem; font-weight: 700; letter-spacing: 0.06em; opacity: 0.45; }
     .chapter-nav-name { font-family: 'Playfair Display', serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
@@ -161,22 +184,36 @@
     .page-section.active { display: block; }
     .page-section.visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== VERTICAL SIDEBAR (DESKTOP) ===== */
+    /* ===== TABLET / MOBILE CONTAINER PADDING ===== */
+    @media (max-width: 1199px) {
+      .pages-container {
+        padding: 0 1.25rem;
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+      }
+    }
+
+    /* ===== VERTICAL SIDEBAR (DESKTOP >= 1200px) ===== */
     @media (min-width: 1200px) {
       #chapter-nav {
         position: fixed; top: 0; left: 0; bottom: 0; width: 175px;
         border-top: none; border-bottom: none; border-right: 2px solid #1a1a1a;
         display: flex; flex-direction: column; justify-content: center;
         background: #f4f1ea; z-index: 1000; padding: 1.2rem 0;
+        overflow-x: hidden;
       }
-      .chapter-nav-inner { flex-direction: column; width: 100%; }
+      .chapter-nav-inner {
+        flex-direction: column; width: 100%; min-width: 100%;
+        margin: 0; padding: 0;
+      }
       .chapter-nav-btn {
         width: 100%; border-right: none; border-left: none; border-bottom: 1px solid rgba(0,0,0,0.1);
         padding: 9px 12px; justify-content: flex-start;
       }
       .chapter-nav-btn:first-child { border-top: 1px solid rgba(0,0,0,0.1); border-left: none; }
       body { padding-left: 175px; }
-      .pages-container { max-width: 1140px; margin: 0 auto; }
+      .pages-container { max-width: 1140px; margin: 0 auto; padding: 0; }
     }
 
     /* ===== MASTHEAD ===== */
@@ -410,14 +447,171 @@
     .contact-key { font-family: 'Merriweather', serif; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
     .contact-val a, .contact-val span { color: #1a1a1a; text-decoration: underline; font-weight: 600; }
 
+    /* Contact Form Styles (Broadsheet & Modern Inputs) */
+    .contact-form-card {
+      border: 2px solid #1a1a1a;
+      background: #faf8f4;
+      padding: 1.5rem 1.4rem;
+      margin-top: 1.5rem;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.12);
+      transition: all 0.2s ease;
+    }
+    .contact-form-label {
+      display: block;
+      font-family: 'Merriweather', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+      color: #1a1a1a;
+    }
+    .contact-form-input {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #1a1a1a;
+      padding: 0.7rem 0.85rem;
+      font-family: 'Merriweather', serif;
+      font-size: 16px; /* Essential to prevent iOS Safari auto-zoom */
+      color: #1a1a1a;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      outline: none;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+    .contact-form-input:focus {
+      border-color: #1a1a1a;
+      box-shadow: 0 0 0 3px rgba(200,168,75,0.35);
+      background: #ffffff;
+    }
+    .contact-form-input::placeholder {
+      color: #8c887b;
+      font-style: italic;
+      font-size: 0.8rem;
+    }
+    .contact-submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.6rem;
+      background: #1a1a1a;
+      color: #f4f1ea;
+      border: 2px solid #1a1a1a;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+    }
+    .contact-submit-btn:hover:not(:disabled) {
+      background: #c8a84b;
+      color: #1a1a1a;
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.25);
+    }
+    .contact-submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
     @media (max-width: 768px) {
-      .spread-two-col, .spread-three-col { grid-template-columns: 1fr; gap: 1.5rem; }
-      .spread-sidebar { border-left: none; border-top: 2px solid #1a1a1a; padding-left: 0; padding-top: 1.2rem; }
-      .spread-inner { padding: 1.5rem 1.2rem 3rem; }
-      .chapter-nav-btn { font-size: 0.52rem; padding: 6px 9px; }
-      #spread-panel { height: 93vh; }
-      .page-section { padding: 1.5rem 0 5rem; }
-      #skill-inspector { left: 1rem; right: 1rem; bottom: 4.5rem; max-width: none; }
+      body {
+        padding-left: 0 !important;
+        font-size: 15px;
+      }
+      .pages-container {
+        padding: 0 0.85rem;
+      }
+      .page-section {
+        padding: 1.25rem 0 4.5rem;
+      }
+      .journal-title {
+        font-size: clamp(2.4rem, 11vw, 4.2rem);
+      }
+      .journal-subhead {
+        font-size: clamp(0.85rem, 3.8vw, 1.15rem);
+      }
+      .journal-tagline {
+        font-size: 0.65rem;
+      }
+      .metadata-bar {
+        flex-direction: column;
+        gap: 0.45rem;
+        padding: 0.6rem 0.8rem;
+      }
+      .spread-two-col, .spread-three-col {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      .spread-sidebar {
+        border-left: none;
+        border-top: 2px solid #1a1a1a;
+        padding-left: 0;
+        padding-top: 1.2rem;
+      }
+      .spread-inner {
+        padding: 1.2rem 0.85rem 3rem;
+      }
+      .chapter-nav-btn {
+        font-size: 0.54rem;
+        padding: 7px 10px;
+      }
+      #spread-panel {
+        width: 100vw;
+        height: 92vh;
+        height: 92dvh;
+        border-left: none;
+        border-right: none;
+        border-radius: 18px 18px 0 0;
+      }
+      .spread-header {
+        padding: 0.6rem 1rem;
+      }
+      .spread-close {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+      }
+      #print-btn {
+        display: none !important;
+      }
+      .page-dots {
+        bottom: 0.45rem;
+        padding: 3px 7px;
+        gap: 5px;
+      }
+      .page-dot {
+        width: 6px;
+        height: 6px;
+      }
+      #skill-inspector {
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: 3.2rem;
+        max-width: none;
+      }
+      .cta-btn-primary, .cta-btn-secondary {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        min-height: 44px;
+      }
+      .contact-submit-btn {
+        width: 100%;
+        min-height: 46px;
+      }
+      .contact-form-card {
+        padding: 1.2rem 1rem;
+      }
+      .stat-badge {
+        flex: 1 1 calc(50% - 0.5rem);
+        min-width: 125px;
+      }
     }
   </style>
 </head>
@@ -1237,16 +1431,70 @@
 
   <!-- ==================== PAGE 09: CONNECT ==================== -->
   <div id="page-connect" class="page-section">
-    <div class="border border-black max-w-3xl mx-auto p-6 spotlight-card fade-up">
+    <div class="border border-black max-w-3xl mx-auto p-5 sm:p-7 spotlight-card fade-up">
       <span class="chapter-label">09 &middot; Connect</span>
       <h3 class="article-headline text-[clamp(1.4rem,3.2vw,2.4rem)] mb-2 leading-tight text-effect" data-effect="words">
         Got a problem worth solving?<br/>Let's talk.
       </h3>
-      <p class="article-body mt-3" style="font-size:0.85rem;">
+      <p class="article-body mt-2 text-stone-700" style="font-size:0.85rem;">
         I am looking for APM/PM internships, and I enjoy working with people who are building products and thinking carefully about who they are for. If that sounds like you, I would like to hear from you.
       </p>
 
-      <p class="article-kicker mt-5 mb-3">Contact &amp; Profiles</p>
+      <!-- Direct Message Transmission Form -->
+      <div class="contact-form-card">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+          <span class="text-[0.62rem] font-bold uppercase tracking-widest text-emerald-800 font-mono">Connect With Me &middot; Direct Dispatch</span>
+        </div>
+        <h4 class="font-['Playfair_Display'] text-xl sm:text-2xl font-black mb-1 leading-tight text-ink">
+          Let's Start a Conversation
+        </h4>
+        <p class="font-['Merriweather'] text-xs text-stone-600 mb-5 leading-relaxed">
+          Drop a note below — whether it's regarding an APM role, a product inquiry, or feedback on Volume I. This transmits directly to my primary email inbox.
+        </p>
+
+        <form id="contact-form" onsubmit="handleContactSubmit(event)" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="contact-name" class="contact-form-label">Full Name <span class="text-red-700">*</span></label>
+              <input type="text" id="contact-name" name="name" required placeholder="John Doe" class="contact-form-input" />
+            </div>
+            <div>
+              <label for="contact-email" class="contact-form-label">Email Address <span class="text-red-700">*</span></label>
+              <input type="email" id="contact-email" name="email" required placeholder="john@example.com" class="contact-form-input" />
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="contact-phone" class="contact-form-label">Phone Number <span class="text-red-700">*</span></label>
+            <input type="tel" id="contact-phone" name="phone" required placeholder="+91 73806 50624" class="contact-form-input" />
+          </div>
+
+          <div class="mb-4">
+            <label for="contact-message" class="contact-form-label">Message <span class="text-red-700">*</span></label>
+            <textarea id="contact-message" name="message" rows="4" required placeholder="How can we help you today? Please provide as much detail as possible." class="contact-form-input resize-y"></textarea>
+          </div>
+
+          <div class="flex items-start gap-2.5 mb-5">
+            <input type="checkbox" id="contact-consent" name="consent" checked required class="mt-1 w-4 h-4 accent-black cursor-pointer" />
+            <label for="contact-consent" class="text-[0.72rem] text-stone-600 leading-snug cursor-pointer font-['Merriweather']">
+              I agree to send this message directly to Akash Yadav's email dispatch for communication.
+            </label>
+          </div>
+
+          <button type="submit" id="contact-submit-btn" class="contact-submit-btn" data-cursor="SEND">
+            <span>Send Message</span>
+            <span>&rarr;</span>
+          </button>
+
+          <div id="contact-status-msg"></div>
+        </form>
+      </div>
+
+      <div class="double-rule my-6"></div>
+
+      <!-- Quick Contact & Profiles -->
+      <p class="article-kicker mb-3">Direct Channels &amp; Profiles</p>
       <div class="weather-box mb-5">
         <div class="contact-link-row" onclick="copyContact('aakash.yadavv23@gmail.com', 'Email copied to clipboard!')" data-cursor="COPY">
           <span class="contact-key">Email</span>
@@ -2021,6 +2269,12 @@
     document.querySelectorAll('.page-dot').forEach(function(dot, i) {
       dot.classList.toggle('active-dot', i === idx);
     });
+
+    // Auto-scroll active nav button into view on mobile
+    var activeNavBtn = document.querySelector('.chapter-nav-btn[data-page="' + pageId + '"]');
+    if (activeNavBtn && typeof activeNavBtn.scrollIntoView === 'function') {
+      activeNavBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   };
 
   function activatePage(pageId) {
@@ -2125,6 +2379,83 @@
   document.getElementById('spread-backdrop').addEventListener('click', closeSpread);
   document.getElementById('spread-panel').addEventListener('click', function(e) { e.stopPropagation(); });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && currentSpread) closeSpread(); });
+
+  // ==============================================
+  // 10. DIRECT DISPATCH MESSAGE FORM (AJAX)
+  // ==============================================
+  window.handleContactSubmit = function(e) {
+    e.preventDefault();
+    var form = document.getElementById('contact-form');
+    var btn = document.getElementById('contact-submit-btn');
+    var status = document.getElementById('contact-status-msg');
+
+    var name = (form.elements['name'] ? form.elements['name'].value : '').trim();
+    var email = (form.elements['email'] ? form.elements['email'].value : '').trim();
+    var phone = (form.elements['phone'] ? form.elements['phone'].value : '').trim();
+    var message = (form.elements['message'] ? form.elements['message'].value : '').trim();
+    var consent = form.elements['consent'] ? form.elements['consent'].checked : true;
+
+    if (!name || !email || !message) {
+      status.innerHTML = '<div class="p-3 bg-red-50 border border-red-300 text-red-800 text-xs font-serif mt-3"><strong>Required:</strong> Please fill in your name, email, and message.</div>';
+      return;
+    }
+    if (!consent) {
+      status.innerHTML = '<div class="p-3 bg-red-50 border border-red-300 text-red-800 text-xs font-serif mt-3">Please check the agreement box to proceed.</div>';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>Transmitting Dispatch...</span> <span class="inline-block animate-pulse">&#9203;</span>';
+    status.innerHTML = '';
+
+    fetch('https://formsubmit.co/ajax/aakash.yadavv23@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        Name: name,
+        Email: email,
+        Phone: phone || 'Not provided',
+        Message: message,
+        _subject: 'New Portfolio Dispatch from ' + name + ' (' + email + ')',
+        _template: 'table'
+      })
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Submission failed');
+      return res.json();
+    })
+    .then(function(data) {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Message Sent &#10003;</span>';
+      status.innerHTML = '<div class="p-3.5 bg-emerald-50 border-2 border-emerald-600 text-emerald-950 font-serif text-xs mt-3 shadow-sm">' +
+        '<strong>&#10003; Dispatch Delivered:</strong> Thank you, ' + name + '! Your message has been sent to Akash\'s desk. I will reply to ' + email + ' shortly.' +
+        '</div>';
+      form.reset();
+      if (typeof window.copyContact === 'function') {
+        var toast = document.getElementById('copy-toast');
+        if (toast) {
+          toast.textContent = 'Telegram delivered to Akash! 🗞️';
+          toast.classList.add('show');
+          setTimeout(function() { toast.classList.remove('show'); }, 2600);
+        }
+      }
+      setTimeout(function() {
+        btn.innerHTML = '<span>Send Message &rarr;</span>';
+      }, 5000);
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Send Message &rarr;</span>';
+      var mailtoLink = 'mailto:aakash.yadavv23@gmail.com?subject=' + encodeURIComponent('Portfolio Note from ' + name) + '&body=' + encodeURIComponent(message + '\n\n---\nName: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone);
+      status.innerHTML = '<div class="p-3.5 bg-amber-50 border-2 border-amber-600 text-amber-950 font-serif text-xs mt-3">' +
+        '<strong>Note:</strong> Direct dispatch took longer than expected. ' +
+        '<a href="' + mailtoLink + '" class="underline font-bold text-amber-900 ml-1">Click here to send directly via your Mail app &rarr;</a>' +
+        '</div>';
+    });
+  };
 </script>
 
 </body>
